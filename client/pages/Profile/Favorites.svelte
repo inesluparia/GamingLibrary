@@ -1,0 +1,1 @@
+<h1>Favorites list coming soon...</h1>

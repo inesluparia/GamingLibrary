@@ -6,6 +6,20 @@ button{
     cursor: pointer;
     color: white;
 }
+
+button {
+        /* background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));text-transform: uppercase; */
+        background: linear-gradient(to right, rgb(91, 79, 247), rgb(255, 17, 17));text-transform: uppercase;
+        color:white;
+        vertical-align: bottom;
+        border: 0;
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        font-weight: 500;
+    }
+    button:hover {
+        box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
+        cursor: pointer;
+    }
 </style>
 
 <button on:click >

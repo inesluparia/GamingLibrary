@@ -19,10 +19,13 @@ router.get("/api/games", (req, res) => {
   })
 })
 
-//get game by id - DO I NEED IT???
+//get game by id + USERNAME
 router.get("/api/games/:id", (req, res) => {
-  db.query('SELECT * FROM games WHERE id = ?;', [req.params.id], function (err, result) {
-    if (!err) res.send({ data: result })
+  db.query(`SELECT g.id, g.name, g.platform, g.year, g.img, g.owner_id, u.username
+  FROM games AS g
+  INNER JOIN users as u ON g.owner_id = u.id
+  WHERE g.id = ?;`, [req.params.id], function (err, result) {
+    if (!err) res.send(result[0])
     else throw err
   })
 })
@@ -33,7 +36,7 @@ router.get("/api/:userid/games", (req, res) => {
   FROM games AS g
   INNER JOIN users as u ON g.owner_id = u.id
   WHERE g.owner_id = ?;`, [req.params.userid], function (err, result) {
-    if (!err) res.status(200).send({ data: result })
+    if (!err) res.status(200).send(result)
     else res.status(409).send({ message: "There has been an error: " + err.message })
   })  
 

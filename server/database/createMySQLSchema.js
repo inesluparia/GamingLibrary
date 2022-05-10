@@ -62,7 +62,7 @@ db.query(`
 
 if (inDeleteMode) {
     db.query(`INSERT INTO users (username, email, phone_nr, password) VALUES 
-    ('testuser', 'test@email.com', 22222222, 'password')`)
+    ('testuser', 'test@email.com', 22222222, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa')`)
 
     db.query(`INSERT INTO games (name, platform, year, owner_id, img) VALUES 
     ('Super Mario Odissey', 'Nintendo Switch', '2017', 1, 'smodissey.jpg'),
