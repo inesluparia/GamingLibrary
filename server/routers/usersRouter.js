@@ -18,7 +18,7 @@ router.post("api/:userid/favs", (req, res) => {
     if (req.session.userId === parseInt(userId)) {
         db.query(`INSERT INTO favorites (user_id, game_id) VALUES (${userId}, ? );`, [req.body.gameId],
         function (err, result) {
-            if (!err) res.status(201).send({ favoriteId: result.lastID })
+            if (!err) res.status(201).send({ favoriteId: result.insertId })
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })
     } else res.status(404).send({ message: "Not authorized!" })
@@ -58,7 +58,7 @@ router.post("api/:userid/msgs", (req, res) => {
     if (req.session.userId === parseInt(userId)) {
         db.query(`INSERT INTO messages ( time, content, sender_id, reciever_id, is_read) VALUES (?, ?, ?, ?, ?)`,
         [ time, content, senderId, recieverId, isRead ], function (err, result) {
-            if (!err) res.status(201).send({ messageId: result.lastID})
+            if (!err) res.status(201).send({ messageId: result.insertId})
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })
     } else res.status(404).send({ message: "Not authorized!" })

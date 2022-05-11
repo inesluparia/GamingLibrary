@@ -43,14 +43,22 @@ router.get("/api/:userid/games", (req, res) => {
 })
 
 //create game
-router.post("/api/:userid/games", (req, res) => {
+
+import multer from "multer"
+import fs from "fs"
+const upload = multer()
+// const upload = multer({limits: {fileSize:20000}})
+
+router.post("/api/:userid/games", upload.single('uploaded_img'), async (req, res) => {
   const userId = req.params.userid
-  const { name, platform, year, img } = req.body
+  const { name, platform, year } = req.body
+  const imgName = req.file.originalname
   if (req.session.userId === parseInt(userId)) {
+    await fs.promises.writeFile('../client/public/images/'+ req.file.originalname, req.file.buffer)
     db.query('INSERT INTO games (name, platform, year, img, owner_id) VALUES (?, ?, ?, ?, ?);',
-      [name, platform, year, img, userId], function (err, result) {
+      [name, platform, year, imgName, userId], function (err, result) {
         if (!err) {
-          res.status(201).send({ gameId: result.lastID })
+          res.status(201).send({ gameId: result.insertId })
         }
         else res.status(409).send({ message: "There has been an error: " + err.message })
       })

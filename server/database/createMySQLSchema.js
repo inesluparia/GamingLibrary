@@ -62,12 +62,17 @@ db.query(`
 
 if (inDeleteMode) {
     db.query(`INSERT INTO users (username, email, phone_nr, password) VALUES 
-    ('testuser', 'test@email.com', 22222222, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa')`)
+    ('Ines', 'ines@ines', 01010101, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa'),
+    ('Luca', 'luca@luca', 22222222, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa')
+    `)
 
     db.query(`INSERT INTO games (name, platform, year, owner_id, img) VALUES 
     ('Super Mario Odissey', 'Nintendo Switch', '2017', 1, 'smodissey.jpg'),
     ('Sonic Forces', 'Nintendo Switch', '2017', 1, 'sonic-forces.jpg'),
-    ('Minecraft', 'Nintendo Switch', '2011', 1, 'minecraft-ns.jpg')
+    ('Minecraft', 'Nintendo Switch', '2011', 1, 'minecraft-ns.jpg'),
+    ('Super Mario Odissey', 'PS4', '2017', 2, 'smodissey.jpg'),
+    ('Sonic Forces', 'PS4', '2017', 2, 'sonic-forces.jpg'),
+    ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg')
     `);
 }
 
