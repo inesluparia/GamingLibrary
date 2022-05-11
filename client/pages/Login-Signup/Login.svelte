@@ -1,6 +1,6 @@
 <script>
     import { navigate } from "svelte-routing"
-    import { isAuthenticated, user } from "../../stores/store";
+    import { isAuthenticated, user } from "../../stores/store"
 
     let error = ""
     let email = ""
@@ -24,17 +24,17 @@
                     });
                 } else {
                     return res.json().then((jsonUser) => {
-                        user.set(jsonUser);
-                        isAuthenticated.set(true);
-                        navigate("/profile", { replace: true });
-                    });
+                        user.set(jsonUser)
+                        isAuthenticated.set(true)
+                        navigate("/profile", { replace: true })
+                    })
                 }
             })
             .catch((err) => {
-                console.log(err);
-                error = err;
-                alert(err.message);
-            });
+                console.log(err)
+                error = err
+                alert(err.message)
+            })
     }
 
 </script>

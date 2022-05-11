@@ -11,11 +11,13 @@
         games = gamesData
     })
 </script>
-
-<div class="flex-container">
-    {#each games as game}
+<div>
+    <h2>Your Collection</h2>
+    <div class="flex-container">
+        {#each games as game}
         <Game id={game.id} name={game.name} img={game.img} platform={game.platform}></Game>
-    {/each}
+        {/each}
+    </div>
 </div>
 
 <style>

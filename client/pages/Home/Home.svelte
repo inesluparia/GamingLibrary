@@ -10,10 +10,14 @@ import Library from "./Library.svelte";
 <Library/> 
 
 <style>
+    h1{
+        margin: 30px;
+    }
     p{
         width: 60%;
         text-align: justify;
         text-justify: inter-word;
         margin:auto;
+        margin-bottom: 30px;
     }
 </style>

@@ -4,6 +4,7 @@ import Favorites from "./Favorites.svelte"
 import Activities from "./Activities.svelte"
 import GamesCollection from "./GamesCollection.svelte"
 import Settings from "./Settings.svelte"
+import AddGame from "./AddGame.svelte";
 
 let content = "collection"
 
@@ -13,11 +14,11 @@ let content = "collection"
 
 <div class="flex-container">
     <div id="options" class="flex-child">
-        <button class:active="{content === "collection"}" on:click={()=> content = "collection"} >My Collection</button>
-        <button class:active="{content === "addGame"}" on:click={()=> content = "addGame"} >🎮 Add Game</button>
-        <button class:active="{content === "favorites"}" on:click={()=> content = "favorites"}>❤ Favorites</button>
-        <button class:active="{content === "activities"}" on:click={()=> content = "activities"}>🔔 Activities</button>
-        <button class:active="{content === "settings"}" on:click={()=> content = "settings"}>⚙ Settings</button>
+        <button class:active="{content === "collection"}" on:click={()=> content = "collection"} >👦  Your Collection</button>
+        <button class:active="{content === "addGame"}" on:click={()=> content = "addGame"} >🎮  Add Game</button>
+        <button class:active="{content === "activities"}" on:click={()=> content = "activities"}>🔔  Activities</button>
+        <button class:active="{content === "favorites"}" on:click={()=> content = "favorites"}>❤  Favorites</button>
+        <button class:active="{content === "settings"}" on:click={()=> content = "settings"}>⚙  Settings</button>
     </div>
     <div id="content" class="flex-child">
         {#if content === "favorites"}
@@ -33,7 +34,7 @@ let content = "collection"
             <Settings/>
         {/if}
         {#if content === "addGame"}
-            <Settings/>
+            <AddGame/>
         {/if}
     </div>
 </div>
@@ -49,11 +50,10 @@ justify-content: space-around;
    display: flex;
    flex-direction: column;
    text-align: center;
-   justify-content: center;
    padding: 5%;
 }
 #content {
-   width: 50%;
+   width: 60%;
    padding: 5%;
 }
 
@@ -70,7 +70,6 @@ button:hover {
    box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
    cursor: pointer;
 }
-
 .active {
         background-color: rgb(255, 173, 21); 
         color:white;

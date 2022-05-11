@@ -1,1 +1,3 @@
-<h1>Favorites list coming soon...</h1>
+<div>
+    <h1>Favorites list coming soon...</h1>
+</div>
