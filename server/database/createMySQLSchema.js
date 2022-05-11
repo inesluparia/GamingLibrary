@@ -1,6 +1,6 @@
 import db from "./createMySQLConnection.js"
 
-let inDeleteMode = true
+let inDeleteMode = false
 
 if (inDeleteMode) {
     db.query("DROP TABLE IF EXISTS favorites;")
