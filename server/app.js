@@ -54,5 +54,9 @@ app.use(authRouter)
 import usersRouter from "./routers/usersRouter.js"
 app.use(usersRouter)
 
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve("../client/public/index.html"))
+})
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {`Server running in port ${PORT} :)`})
