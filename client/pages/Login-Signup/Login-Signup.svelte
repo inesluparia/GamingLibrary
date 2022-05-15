@@ -1,5 +1,6 @@
 <script>
-
+export let loginSocket
+    
 import Login from "./Login.svelte"
 import Signup from "./Signup.svelte"
 let toggle = true
@@ -13,7 +14,7 @@ let toggle = true
 </div>
 <div>
     {#if toggle}
-    <Login></Login>
+    <Login loginSocket={loginSocket}></Login>
     {:else}
     <Signup></Signup>
     {/if}

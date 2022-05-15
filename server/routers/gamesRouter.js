@@ -84,7 +84,7 @@ router.post("/api/:userid/games", upload.single('uploaded_img'), async (req, res
 // })
 
 //delete game
-router.delete("api/:userid/games/:id", (req, res) => {
+router.delete("/api/:userid/games/:id", (req, res) => {
   const userId = req.params.userid
     if (req.session.userId === parseInt(userId)) {
       db.query('DELETE FROM games WHERE id = ?;', [req.params.id], function (err, result) {
@@ -92,5 +92,6 @@ router.delete("api/:userid/games/:id", (req, res) => {
       })
     } else res.status(404).send({ message: "Not authorized!" })
 })
+
 
 export default router

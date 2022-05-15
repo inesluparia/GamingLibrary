@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
 // connection.connect()
 
 connection.connect( err => {
-    if (!err) console.log("Connected to database established!") 
+    if (!err) console.log("Connection to database established!") 
     else console.log("Connection to DB failed: " + JSON.stringify(err))
 })
 

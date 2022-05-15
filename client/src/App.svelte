@@ -1,15 +1,27 @@
 <script>
-	import { Route, Router, Link } from "svelte-routing"
 	import About from "../pages/About/About.svelte"
 	import Home from "../pages/Home/Home.svelte"
-	import Details from "../pages/GameDetails/GameDetails.svelte"
+	import GameDetails from "../pages/GameDetails/GameDetails.svelte"
+	import UserDetails from "../pages/UserDetails/UserDetails.svelte"
 	import Login from "../pages/Login-Signup/Login-Signup.svelte"
-	import Button from "../components/button.svelte"
 	import Profile from "../pages/Profile/Profile.svelte"
 	import Logo from "../components/logo.svelte"
-	import { isAuthenticated } from "../stores/store"
 	import Footer from "../components/Footer.svelte"
-	export let url = ""
+	
+	import { Route, Router, Link } from "svelte-routing"
+	import { isAuthenticated, user } from "../stores/store"
+
+	import io from "socket.io-client"
+	
+	// socket.on("notify reciever", (msg) => {alert(msg.content)});
+	
+	function socketLogin() {
+		const socket = io()
+		socket.emit("login", {userId: $user.userId})
+	}
+
+	export let url = ""	
+
 </script>
 
 <Router {url}>
@@ -35,19 +47,19 @@
 		
 		<Route path="/"><Home /></Route>
 		<Route path="/about"><About /></Route>
-			<Route path="/login"><Login /></Route>
+			<Route path="/login"><Login loginSocket={socketLogin}/></Route>
 			<Route path="/profile">
 				{#if $isAuthenticated}
 					<Profile />
 				{:else}
-					<Login />
+					<Login loginSocket={socketLogin}/>
 				{/if}	
 			</Route>
 			<Route path="/games/:id" let:params>
-				<Details id={params.id} />
+				<GameDetails id={params.id} />
 			</Route>
 			<Route path="/users/:id" let:params>
-				<Details id={params.id} />
+				<UserDetails id={params.id} />
 			</Route>
 		
 	</main>

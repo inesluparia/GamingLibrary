@@ -36,9 +36,9 @@ import { navigate } from "svelte-routing";
             }
         })
         .catch((err) => {
-                console.log(err);
-                error = err;
-                alert(err.message);
+                console.log(err)
+                error = err
+                alert(err.message)
             });
     }
 

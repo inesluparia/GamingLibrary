@@ -6,6 +6,8 @@
     let email = ""
     let password = ""
 
+    export let loginSocket
+
     async function login() {
         await fetch("/auth/login", {
             method: "POST",
@@ -26,6 +28,8 @@
                     return res.json().then((jsonUser) => {
                         user.set(jsonUser)
                         isAuthenticated.set(true)
+                        // socket.emit("login", {userId: $user.userId})
+                        loginSocket()
                         navigate("/profile", { replace: true })
                     })
                 }
