@@ -13,11 +13,13 @@
 
 	import io from "socket.io-client"
 	
-	// socket.on("notify reciever", (msg) => {alert(msg.content)});
-	
+	//don't I have to declare socket outside for it to persist after the function?
 	function socketLogin() {
 		const socket = io()
 		socket.emit("login", {userId: $user.userId})
+		socket.on("notify reciever", ({data})=> {
+			alert("You have a new message from" + data.sender)
+		})
 	}
 
 	export let url = ""	

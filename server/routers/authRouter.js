@@ -11,7 +11,7 @@ router.post("/auth/signup", async (req, res) => {
                 [username, email, phone], function (err, result) {
                     if (!err) {
                         req.session.userId = result.insertId
-                        req.session.email = email
+                        req.session.username = username
                         res.status(201).send({ username: username, userId: result.insertId })
                     } else {
                         console.log(err)

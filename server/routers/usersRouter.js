@@ -51,13 +51,13 @@ router.get("api/:userid/msgs", (req, res) => {
     } else res.status(404).send({ message: "Not authorized!" })
 })
 
-//NOT TESTED
-router.post("api/:userid/msgs", (req, res) => {
-    const userId = req.params.userid
-    const { time, content, senderId, recieverId, isRead } = req.body
-    if (req.session.userId === parseInt(userId)) {
-        db.query(`INSERT INTO messages ( time, content, sender_id, reciever_id, is_read) VALUES (?, ?, ?, ?, ?)`,
-        [ time, content, senderId, recieverId, isRead ], function (err, result) {
+router.post("/api/:username/msgs", (req, res) => {
+    const username = req.params.username
+    console.log(username)
+    const { time, content, reciever} = req.body
+    if (req.session.username === username) {
+        db.query(`INSERT INTO messages (time, reciever, content, sender) VALUES (?, ?, ?, ?)`,
+        [time, reciever, content, req.params.username], function (err, result) {
             if (!err) res.status(201).send({ messageId: result.insertId})
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })

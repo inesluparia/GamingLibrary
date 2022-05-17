@@ -1,11 +1,13 @@
 <script>
    import { onMount } from "svelte"
    import { navigate } from "svelte-routing"
-   import { user } from "../../stores/store"
+   import NewMessage from "../../components/NewMessage.svelte"
+   import { isAuthenticated, user } from "../../stores/store"
 
    let game = {}
    export let id = ""
    export let isFav = false
+   let renderMessageForm = false
 
    onMount(async () => {
       const res = await fetch(`/api/games/${id}`)
@@ -49,24 +51,29 @@
    </div>
 
    <div class="flex-child">
-      <div id="txt-wrapper">
-         <h2>{game.name}</h2>
-         <p>Year: {game.year}</p>
-         <p>Platform: {game.platform}</p>
-         <p>Owner: {game.username}</p>
-         {#if game.owner_id === $user.userId}
-            <button on:click|preventDefault={deleteGame}
-               >Delete from your collection</button
-            >
-         {:else}
-            <button on:click|preventDefault={() => navigate(`/users/${game.owner_id}`)}
-               >See {game.username}'s collection</button
-            >
-            <button on:click|preventDefault={()=> navigate("/")}
-               >Contact {game.username}</button
-            >
-            {/if}
-      </div>
+      {#if !renderMessageForm}
+         <div id="txt-wrapper">
+            <h2>{game.name}</h2>
+            <p>Year: {game.year}</p>
+            <p>Platform: {game.platform}</p>
+            <p>Owner: {game.username}</p>
+            {#if game.owner_id === $user.userId}
+               <button on:click|preventDefault={deleteGame}
+                  >Delete from your collection</button
+               >
+            {:else}
+               <button on:click|preventDefault={() => navigate(`/users/${game.owner_id}`)}
+                  >See {game.username}'s collection</button
+               >
+               <button on:click|preventDefault={()=> $isAuthenticated ? renderMessageForm = true : navigate("/login")}
+                  >Contact {game.username}</button
+               >
+               {/if}
+         </div>
+      {:else}
+         <NewMessage reciever={game.username}></NewMessage>
+      {/if}
+
    </div>
 </div>
 

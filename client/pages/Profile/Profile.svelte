@@ -1,10 +1,10 @@
 <script>
 import { user } from "../../stores/store"
 import Favorites from "./Favorites.svelte"
-import Activities from "./Activities.svelte"
 import GamesCollection from "./GamesCollection.svelte"
 import Settings from "./Settings.svelte"
 import AddGame from "./AddGame.svelte";
+import Messages from "./Messages.svelte";
 
 let content = "collection"
 
@@ -28,9 +28,9 @@ let content = "collection"
             <GamesCollection/>
         {/if}
         {#if content === "activities"}
-            <Activities/>
+            <Messages/>
         {/if}
-        {#if content === "activities"}
+        {#if content === "settings"}
             <Settings/>
         {/if}
         {#if content === "addGame"}
@@ -74,4 +74,9 @@ button:hover {
         background-color: rgb(255, 173, 21); 
         color:white;
     }
+#content{
+    text-align: center;
+        margin:auto;
+        justify-content: center;
+}    
 </style>

@@ -1,6 +1,6 @@
 import db from "./createMySQLConnection.js"
 
-let inDeleteMode = false
+let inDeleteMode = true
 
 if (inDeleteMode) {
     db.query("DROP TABLE IF EXISTS favorites;")
@@ -12,7 +12,7 @@ if (inDeleteMode) {
 db.query(`
     CREATE TABLE IF NOT EXISTS users (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        username VARCHAR(30) UNIQUE,
+        username VARCHAR(30) UNIQUE NOT NULL,
         email VARCHAR(50) UNIQUE,
         phone_nr INT UNIQUE,
         password VARCHAR(100)
@@ -48,15 +48,15 @@ db.query(`
 db.query(`
     CREATE TABLE IF NOT EXISTS messages (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        time TIMESTAMP NOT NULL, 
-        sender_id INT NOT NULL,
-        reciever_id INT NOT NULL,
+        time DATETIME NOT NULL, 
+        sender VARCHAR(30) NOT NULL,
+        reciever VARCHAR(30) NOT NULL,
         content VARCHAR(300) NOT NULL,
         is_read TINYINT NOT NULL default 0,
-        CONSTRAINT FK_sender_message FOREIGN KEY (sender_id)
-        REFERENCES users(id),
-        CONSTRAINT FK_reciever_message FOREIGN KEY (reciever_id)
-        REFERENCES users(id)
+        CONSTRAINT FK_sender_message FOREIGN KEY (sender)
+        REFERENCES users(username),
+        CONSTRAINT FK_reciever_message FOREIGN KEY (reciever)
+        REFERENCES users(username)
     );`
 )
 
