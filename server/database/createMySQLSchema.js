@@ -1,6 +1,6 @@
 import db from "./createMySQLConnection.js"
 
-let inDeleteMode = true
+let inDeleteMode = false
 
 if (inDeleteMode) {
     db.query("DROP TABLE IF EXISTS favorites;")
@@ -77,10 +77,3 @@ if (inDeleteMode) {
 }
 
 db.end()
-
-// db.query(sql, function (err, result) {
-    //     if (err) throw err;
-    //     console.log("Result: " + result);
-    //   })
-
-// ' YYYY-MM-DD hh:mm:ss ' format

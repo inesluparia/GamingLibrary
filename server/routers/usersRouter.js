@@ -3,7 +3,7 @@ const router = Router()
 import db from "../database/createMySQLConnection.js"
 
 //NOT TESTED
-router.get("api/:userid/favs", (req, res) => {
+router.get("/api/:userid/favs", (req, res) => {
     if (req.session.userId === parseInt(userId)) {
         db.query('SELECT * FROM favorites WHERE user_id = ?;', [req.params.userid], function (err, result) {
             if (!err) res.send({ data: result })
@@ -13,7 +13,7 @@ router.get("api/:userid/favs", (req, res) => {
 })
 
 //NOT TESTED
-router.post("api/:userid/favs", (req, res) => {
+router.post("/api/:userid/favs", (req, res) => {
     const userId = req.params.userid
     if (req.session.userId === parseInt(userId)) {
         db.query(`INSERT INTO favorites (user_id, game_id) VALUES (${userId}, ? );`, [req.body.gameId],
@@ -38,13 +38,13 @@ router.delete("/api/:userid/favs/:id", async (req, res) => {
 })
 
 //NOT TESTED
-router.get("api/:userid/msgs", (req, res) => {
-    const userId = req.params.userid
-    if (req.session.userId === parseInt(userId)) {
+router.get("/api/:username/msgs", (req, res) => {
+    const username = req.params.username
+    if (req.session.username === username) {
         db.query(`SELECT * FROM messages 
-        WHERE sender_id = ? 
-        OR reciever_id = ?
-        ORDER BY time ASC;`, [userId, userId], function (err, result) {
+        WHERE sender = ? 
+        OR reciever = ?
+        ORDER BY time ASC;`, [username, username], function (err, result) {
             if (!err) res.send({ data: result })
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })

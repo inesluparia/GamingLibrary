@@ -1,25 +1,54 @@
 <script>
 import { onMount } from "svelte"
+import ListMessage from "./ListMessage.svelte"
 import Message from "./Message.svelte"
 import { user } from "../../stores/store"
 
 let messages = []
 
 onMount( async ()=> {
-    const res = await fetch(`/api/${$user.userId}/msgs`)
-    const data = await res.json()
-    messages = data
+    const res = await fetch(`/api/${$user.username}/msgs`)
+    const {data: msgsData} = await res.json()
+    messages = msgsData
 })
 
+let display = "activities"
+let messageToOpen = {}
+
+function showMessage(id){
+    messageToOpen = messages.find( m => m.id == id)
+    display = "message"
+}
+
 </script>
-<h4>Your recent activity</h4>
-<div>
+<div class:hide={display !== "activities"}>
     {#if messages.length}
-        {#each messages as msg}
-            <Message {...msg}/>
-        {/each}
+        <h3>Your recent activity</h3>
+        <div id="wrapper">
+            {#each messages as msg}
+            <ListMessage renderMessage={showMessage} {...msg}/>
+            {/each}
+        </div>
     {:else}
-        <h4>You don't have any messages yet</h4>
+        <h3>You don't have any messages yet</h3>
     {/if}
 </div>
+{#if display === "message"}
+    <Message {...messageToOpen}/>
+{/if}
+<div class:hide={display !== "newMessage"}>
 
+</div>
+
+<style>
+    .hide {
+		display: none;
+	}
+    #wrapper {
+    height: 400px;
+    overflow-y: scroll;
+    }
+    #wrapper::-webkit-scrollbar { 
+    display: none;
+    }
+</style>
