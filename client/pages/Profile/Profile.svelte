@@ -1,16 +1,24 @@
 <script>
-import { user } from "../../stores/store"
+import { isAuthenticated, user } from "../../stores/store"
 import Favorites from "./Favorites.svelte"
 import GamesCollection from "./GamesCollection.svelte"
 import Settings from "./Settings.svelte"
 import AddGame from "./AddGame.svelte";
 import Messages from "./Messages.svelte";
+import { navigate } from "svelte-routing";
 
 let content = "collection"
+
+function signOut(){
+    $isAuthenticated = false
+    $user = {}
+    navigate("/")
+}
 
 </script>
 
 <h1>Hello {$user.username}!</h1>
+<div id="signout" on:click={signOut} >Sign out</div>
 
 <div class="flex-container">
     <div id="options" class="flex-child">
@@ -43,6 +51,12 @@ let content = "collection"
 .flex-container{
 display: flex;
 justify-content: space-around;
+}
+
+#signout {
+    float: right;
+    padding-right: 40px;
+    color: blue;
 }
 
 #options {
