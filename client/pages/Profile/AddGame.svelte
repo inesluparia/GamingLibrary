@@ -18,16 +18,15 @@ import { navigate } from "svelte-routing";
         form.append("year", year)
         form.append("uploaded_img", image)
 
-        fetch(`/api/${$user.userId}/games`, {
+        fetch(`/api/${$user.username}/games`, {
             method: "POST",
             body: form
         })
         .then(res => {
             if (res.ok) {
                 return res.json().then(() => {                        
+                    alert("Your game was added!")
                     navigate("/profile")
-                    alert("Cannot  reload yet, your game wwas added!")
-
                     });
             } else {
                 return res.json().then((body) => {
@@ -52,42 +51,46 @@ import { navigate } from "svelte-routing";
 }
 
 </script>
-<div id="container">
+<div id="wrapper">
+    <div class="container">
         <!-- <span><input type="file" name="uploaded_img" bind:this={input}/></span> -->
         <div class="clickable" on:click={fileinput.click()}>Choose an Image</div>
         <input style="display:none" type="file" accept=".jpg, .jpeg, .png" on:change={onFileSelected} bind:this={fileinput} >
-    <div id="preview-container">
-        {#if previewImg}
-        <img src="{previewImg}" alt="Preview" />
-        {:else}
-        <span>Image Preview</span>
-        {/if}
+        <div id="preview-container">
+            {#if previewImg}
+            <img src="{previewImg}" alt="Preview" />
+            {:else}
+            <span>Image Preview</span>
+            {/if}
+        </div>
     </div>
-
-    <div>
-        <label for="name">Name</label>
-        <input name="name" bind:value={name}/>
+    <div class="container">
+        <div>
+            <label for="name">Name</label>
+            <input name="name" bind:value={name}/>
+        </div>        
+        <div>
+            <label for="platform">Platform</label>
+            <input name="platform" bind:value={platform}/>
+        </div>        
+        <div>
+            <label for="year">Year</label>
+            <input name="year" bind:value={year}/>
+        </div>        
+        <div class="error-message">
+            <small>{error}</small>
+        </div>
+        <button on:click={submit}>Add Game</button>           
     </div>
-
-    <div>
-        <label for="platform">Platform</label>
-        <input name="platform" bind:value={platform}/>
-    </div>
-
-    <div>
-        <label for="year">Year</label>
-        <input name="year" bind:value={year}/>
-    </div>
-
-    <div class="error-message">
-        <small>{error}</small>
-    </div>
-
-    <button on:click={submit}>Add Game</button>           
 </div>
 <style>
-#container {
+#wrapper {
     display: flex;
+}
+
+.container {
+    display: flex;
+    margin: 50px;
     flex-direction: column;
     justify-content: center;
     align-items: center;

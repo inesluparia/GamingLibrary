@@ -6,7 +6,7 @@
     let games = []
 
     onMount( async () => {
-        const response = await fetch( `/api/${$user.userId}/games`)
+        const response = await fetch( `/api/${$user.username}/games`)
         const gamesData = await response.json()
         games = gamesData
     })

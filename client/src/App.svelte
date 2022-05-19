@@ -60,8 +60,8 @@
 			<Route path="/games/:id" let:params>
 				<GameDetails id={params.id} />
 			</Route>
-			<Route path="/users/:id" let:params>
-				<UserDetails id={params.id} />
+			<Route path="/users/:username" let:params>
+				<UserDetails username={params.username} />
 			</Route>
 		
 	</main>

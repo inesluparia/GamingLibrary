@@ -16,7 +16,7 @@
    });
 
    async function deleteGame() {
-      const res = await fetch(`/api/${$user.userId}/games/${id}`, { method: "DELETE" })
+      const res = await fetch(`/api/${$user.username}/games/${id}`, { method: "DELETE" })
          .then((res) => {
             if (res.ok) {
                alert("game deleted");
@@ -62,7 +62,7 @@
                   >Delete from your collection</button
                >
             {:else}
-               <button on:click|preventDefault={() => navigate(`/users/${game.owner_id}`)}
+               <button on:click|preventDefault={() => navigate(`/users/${game.username}`)}
                   >See {game.username}'s collection</button
                >
                <button on:click|preventDefault={()=> $isAuthenticated ? renderMessageForm = true : navigate("/login")}
