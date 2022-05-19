@@ -11,20 +11,43 @@
 	import { Route, Router, Link } from "svelte-routing"
 	import { isAuthenticated, user } from "../stores/store"
 
+	import { SvelteToast } from '@zerodevx/svelte-toast'
+    import { toast } from '@zerodevx/svelte-toast'
+
 	import io from "socket.io-client"
+	import { onMount } from "svelte";
 	
 	//don't I have to declare socket outside for it to persist after the function?
+	//do I need OnMount here???
+	onMount(() => {
+		if ($isAuthenticated)
+		socketLogin()
+	})
+
+	let socket 
+
 	function socketLogin() {
-		const socket = io()
-		socket.emit("login", {userId: $user.userId})
-		socket.on("notify reciever", ({data})=> {
-			alert("You have a new message from" + data.sender)
+		socket = io()
+		socket.emit("login", {username: $user.username})
+		socket.on("notify reciever", (data)=> {
+			toast.push(`You just recieved a new message from ${data.sender}!`, {
+				theme: {
+					'--toastBackground': '#F56565',
+					'--toastBarBackground': '#C53030'
+				}
+			})
 		})
+	}
+
+	function socketNewMessage(data){
+		console.log("socket new message called from app.svelte -> data: ", data)
+		socket.emit("new message", data)
 	}
 
 	export let url = ""	
 
 </script>
+<SvelteToast/>
 
 <Router {url}>
 	<main>
@@ -58,7 +81,7 @@
 				{/if}	
 			</Route>
 			<Route path="/games/:id" let:params>
-				<GameDetails id={params.id} />
+				<GameDetails id={params.id} notifySocket={socketNewMessage}/>
 			</Route>
 			<Route path="/users/:username" let:params>
 				<UserDetails username={params.username} />

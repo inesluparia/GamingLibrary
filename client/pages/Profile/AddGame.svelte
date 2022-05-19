@@ -10,6 +10,8 @@ import { navigate } from "svelte-routing";
     let platform
     let year
 
+    import { toast } from '@zerodevx/svelte-toast'
+
     function submit() {
         
         const form = new FormData()
@@ -25,13 +27,20 @@ import { navigate } from "svelte-routing";
         .then(res => {
             if (res.ok) {
                 return res.json().then(() => {                        
-                    alert("Your game was added!")
+                    toast.push("Your game was added!", {
+                        theme: {'--toastBarBackground': '#2F855A' }
+                    })
                     navigate("/profile")
-                    });
+                });
             } else {
                 return res.json().then((body) => {
-                        alert(body.message)
+                    toast.push(body.message, {
+                        theme: {
+                            '--toastBackground': '#F56565',
+                            '--toastBarBackground': '#C53030'
+                        }
                     })
+                })
             }
         })
         .catch((err) => {

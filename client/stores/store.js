@@ -5,7 +5,7 @@ export const isAuthenticated = writable(localStorage.isAuth === 'true' ? true : 
 isAuthenticated.subscribe( value => localStorage.isAuth = String(value))
 
 
-export const user = writable(JSON.parse(localStorage.user))
+export const user = writable(JSON.parse(localStorage.getItem('user')))
 
-user.subscribe(value => localStorage.user = JSON.stringify(value))
+user.subscribe(value => localStorage.setItem('user', JSON.stringify(value)))
 

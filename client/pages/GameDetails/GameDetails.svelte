@@ -3,12 +3,15 @@
    import { navigate } from "svelte-routing"
    import NewMessage from "../../components/NewMessage.svelte"
    import { isAuthenticated, user } from "../../stores/store"
+   import { toast } from '@zerodevx/svelte-toast'
 
-   let game = {}
    export let id = ""
    export let isFav = false
-   let renderMessageForm = false
+   export let notifySocket
 
+   let renderMessageForm = false
+   let game = {}
+   
    onMount(async () => {
       const res = await fetch(`/api/games/${id}`)
       const data = await res.json()
@@ -19,7 +22,7 @@
       const res = await fetch(`/api/${$user.username}/games/${id}`, { method: "DELETE" })
          .then((res) => {
             if (res.ok) {
-               alert("game deleted");
+               toast.push('The game was deleted!')
                navigate("/profile");
             } else {
                return res.json().then((body) => {
@@ -71,7 +74,7 @@
                {/if}
          </div>
       {:else}
-         <NewMessage reciever={game.username}></NewMessage>
+         <NewMessage reciever={game.username} notifySocket={notifySocket}></NewMessage>
       {/if}
 
    </div>

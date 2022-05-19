@@ -74,7 +74,7 @@
         </div>
         <div>
             <label for="phone">Phone Nr</label>
-            <input id="phone-input" bind:value={phone} />
+            <input id="phone" bind:value={phone} />
         </div>
         <div>
             <label for="password">Password</label>
@@ -109,12 +109,6 @@
         padding-left: 50px; */
         width: 300px;
     }
-
-    #phone-input {
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><text x="5" y="19"">+45</text></svg>')
-            no-repeat;
-    }
-
     button {
         width: 150px;
         background: linear-gradient(to right, rgb(255, 171, 88), rgb(255, 71, 71));

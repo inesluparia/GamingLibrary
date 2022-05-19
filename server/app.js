@@ -71,29 +71,35 @@ let socketIdByUser = new Map()
 
 io.on("connection", (socket) => {
 	console.log("Connected", socket.id)
-	let sessionUserId
+	let sessionUsername
+
   
-    socket.on("login", ({ userId }) => {
-		sessionUserId = socket.request.session.userId;
-		if (userId === sessionUserId) {
-			socketIdByUser.set(sessionUserId, socket.id);
+    socket.on("login", ({ username }) => {
+		sessionUsername = socket.request.session.username
+		console.log("logging point data username and sessionUsername")
+		console.log(username)
+		console.log(sessionUsername)
+		if (username === sessionUsername) {
+			socketIdByUser.set(sessionUsername, socket.id)
 			console.log("on login called", socketIdByUser)
 		} else new Error("unautharized")
     });
 
-	socket.on("new message", ({data}) => {
-		const sessionUserId = socket.request.session.userId;
-		if (data.senderId === sessionUserId) {
-			//TODO update the database
-			if (socketIdByUser.has(sessionUserId)){
-				const recieverSocketId = socketIdByUser.get(sessionUserId)
-				socket.broadcast.to(recieverSocketId).emit('notify reciever', data);
+	socket.on("new message", (data) => {
+		console.log("on.new message was called, data:", data)
+		 const sessionUsername = socket.request.session.username;
+		if (data.sender === sessionUsername) {
+			if (socketIdByUser.has(data.reciever)){
+				const recieverSocketId = socketIdByUser.get(data.reciever)
+				console.log("recieverSocketId: ", recieverSocketId)
+				// io.to(recieverSocketId).emit('notify reciever', data);
+				socket.to(recieverSocketId).emit('notify reciever', data);
 			}
-		}
+		} else new Error("unautharized")
 	})
 
     socket.on("disconnect", () => {
-		socketIdByUser.delete(sessionUserId)
+		socketIdByUser.delete(sessionUsername)
 		console.log("socket disconnected", socketIdByUser)
 	})
 });

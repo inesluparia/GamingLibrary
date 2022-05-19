@@ -6,10 +6,22 @@ import { user } from "../../stores/store"
 
 let messages = []
 
-onMount( async ()=> {
-    const res = await fetch(`/api/${$user.username}/msgs`)
-    const {data: msgsData} = await res.json()
-    messages = msgsData
+onMount( ()=> {
+    // const res = await fetch(`/api/${$user.username}/msgs`)
+    // const {data: msgsData} = await res.json()
+    // messages = msgsData
+    fetch(`/api/${$user.username}/msgs`)
+    .then( res => {
+        if (res.ok){
+            res.json().then( json => {
+                messages = json.data
+            })            
+        } else {
+            return res.json().then((body) => {
+                alert(body.message)
+            });
+        }
+    })
 })
 
 let display = "activities"

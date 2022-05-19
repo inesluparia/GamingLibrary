@@ -4,8 +4,9 @@ import { navigate } from "svelte-routing";
 export let reciever
 let content = "Hi! Do you want to exchange games? Check out my collection :)"
 let error = ""
+export let notifySocket
 
-function renderMessageForm() {
+function sendMessage() {
     let time = new Date()
     time = time.toISOString().slice(0, 19).replace('T', ' ')
     fetch(`/api/${$user.username}/msgs`, {
@@ -22,14 +23,18 @@ function renderMessageForm() {
         .then(res => {
             if (res.ok) {
                 return res.json().then(() => {                        
+                    alert("Your message was sent!")
+                    notifySocket({
+                        sender: $user.username,
+                        reciever: reciever,
+                        content: content
+                    })
                     navigate("/profile")
-                    alert("Cannot  reload yet, your message was sent!")
-
                     });
             } else {
                 return res.json().then((body) => {
-                        alert(body.message)
-                    })
+                    alert(body.message)
+                })
             }
         })
         .catch((err) => {
@@ -49,6 +54,6 @@ function renderMessageForm() {
         <input bind:value={content} type="text"/>
     </p>
     <small>{error}</small>
-    <button on:click={renderMessageForm}>Send message</button>
+    <button on:click={sendMessage}>Send message</button>
 
 </div>

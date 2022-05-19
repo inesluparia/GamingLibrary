@@ -28,7 +28,6 @@
                     return res.json().then((jsonUser) => {
                         user.set(jsonUser)
                         isAuthenticated.set(true)
-                        // socket.emit("login", {userId: $user.userId})
                         loginSocket()
                         navigate("/profile", { replace: true })
                     })
