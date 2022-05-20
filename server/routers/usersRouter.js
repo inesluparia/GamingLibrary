@@ -39,6 +39,7 @@ router.delete("/api/:userid/favs/:id", async (req, res) => {
 
 //NOT TESTED
 router.get("/api/:username/msgs", (req, res) => {
+    console.log("Cookie expiration ", req.session.cookie.expires)
     const username = req.params.username
     if (req.session.username === username) {
         db.query(`SELECT * FROM messages 

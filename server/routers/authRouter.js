@@ -4,6 +4,16 @@ import db from "../database/createMySQLConnection.js"
 
 import bcrypt from "bcrypt"
 
+router.get("auth/getuser", (req, res)=> {
+    res.send(req.session.username)
+})
+
+router.get("/auth/signout", (req, res) => {
+    req.session.username = undefined
+    req.session.userId = undefined
+    res.status(200).send()
+})
+
 router.post("/auth/signup", async (req, res) => {
     const { username, email, phone, password } = await req.body
     const hashedPassword = await bcrypt.hash(password, 12)

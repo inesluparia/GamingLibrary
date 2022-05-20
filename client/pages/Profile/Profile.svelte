@@ -3,22 +3,38 @@ import { isAuthenticated, user } from "../../stores/store"
 import Favorites from "./Favorites.svelte"
 import GamesCollection from "./GamesCollection.svelte"
 import Settings from "./Settings.svelte"
-import AddGame from "./AddGame.svelte";
-import Messages from "./Messages.svelte";
-import { navigate } from "svelte-routing";
+import AddGame from "./AddGame.svelte"
+import Messages from "./Messages.svelte"
+import { navigate } from "svelte-routing"
+import { toast } from "@zerodevx/svelte-toast"
 
 let content = "collection"
 
-function signOut(){
+async function signOut(){    
     $isAuthenticated = false
     $user = {}
-    navigate("/")
-}
+    await fetch("/auth/signout").then(res => {
+            if (res.ok) {
+                    toast.push("Your are logged out", {
+                        theme: {'--toastBackground': '#2F855A' }
+                    })
+                    navigate("/")
+            }
+            else {
+                return res.json().then((body) => {
+                    toast.push(body.message, {
+                        theme: {
+                            '--toastBackground': '#F56565',
+                            '--toastBarBackground': '#C53030'
+                        }
+                    })
+                })
+            }    
+})}
 
 </script>
 
 <h1>Hello {$user.username}!</h1>
-<div id="signout" on:click={signOut} >Sign out</div>
 
 <div class="flex-container">
     <div id="options" class="flex-child">
@@ -27,6 +43,7 @@ function signOut(){
         <button class:active="{content === "activities"}" on:click={()=> content = "activities"}>🔔  Activities</button>
         <button class:active="{content === "favorites"}" on:click={()=> content = "favorites"}>❤  Favorites</button>
         <button class:active="{content === "settings"}" on:click={()=> content = "settings"}>⚙  Settings</button>
+        <div id="signout" on:click={signOut} >SIGN OUT</div>
     </div>
     <div id="content" class="flex-child">
         {#if content === "favorites"}
@@ -54,9 +71,14 @@ justify-content: space-around;
 }
 
 #signout {
-    float: right;
-    padding-right: 40px;
+    text-align: left;
+    float: left;
+    padding: 20px;
+    margin-left: 30px;
+}
+#signout:hover{
     color: blue;
+    cursor: pointer;
 }
 
 #options {
