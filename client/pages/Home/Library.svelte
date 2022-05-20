@@ -36,6 +36,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+        margin: 0 10%;
     }
 
     #search-input {

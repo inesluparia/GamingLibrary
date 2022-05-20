@@ -19,9 +19,16 @@
 	
 	//don't I have to declare socket outside for it to persist after the function?
 	//do I need OnMount here???
-	onMount(() => {
-		if ($isAuthenticated)
-		socketLogin()
+	onMount(async () => {
+		const res = await fetch("/auth/getuser")
+		const {username} = await res.json()
+		if ( $isAuthenticated && username === $user.username) {
+			socketLogin()
+		} else { 
+			localStorage.clear()
+			$isAuthenticated = false
+			$user = {}
+		}	
 	})
 
 	let socket 

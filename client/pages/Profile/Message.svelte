@@ -1,52 +1,59 @@
 <script>
-    import { user } from "../../stores/store";
+    import { user } from "../../stores/store"
 
-    export let time;
-    export let sender;
-    export let reciever;
-    export let content;
-    // export let id
-    // export let is_read
-
-    // let prettyTime = new Date(time)
-    // prettyTime = prettyTime.getHours() + ":" + prettyTime.getMinutes() + " " + prettyTime.getDate() + "/" + prettyTime.getMonth()
-
-    time = new Date(time);
-    time =
-        time.getHours() +
-        ":" +
-        time.getMinutes() +
-        " " +
-        time.getDate() +
-        "/" +
-        time.getMonth();
+    export let time
+    export let sender
+    export let reciever
+    export let content
+    
+    time = new Date(time)
+    time = time.getHours() +":"+ time.getMinutes() +" "+ time.getDate() +"/"+ time.getMonth()
+    
 </script>
 
 <div class="container">
-    <div id="time">{time}</div>
-    <div>
-        {sender === $user.username ? `To: ${reciever}` : `From: ${sender}`}
-    </div>
+    <span>Message {sender === $user.username ? `to ${reciever}` : `from: ${sender}`}</span>
+    <span id="time"> {time} </span>
     <p>{content}</p>
-    <button
-        >Write a message to {sender === $user.username
-            ? reciever
-            : sender}</button
-    >
+    <button>Reply to {sender === $user.username ? reciever : sender}</button>
 </div>
 
 <style>
     .container {
-        background-color: #f0f0f0;
-        border: 2px solid #dedede;
-        border-radius: 5px;
-        padding: 10px;
-        height: 400px;
-        margin: 10px;
+        display: flex;
+        margin: 50px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
-
+    p {
+        width: 80%;
+        height: 200px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+    }
+    button {
+        width: 300px;
+        height: 40px;
+        margin: 15px;
+        vertical-align: bottom;
+        border: 0;
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        font-weight: 500;
+    }
+    button:hover {
+        box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
+        cursor: pointer;
+    }
     #time {
         float: right;
-        padding: 10px;
+    }
+    span {
+        font-weight: bold;
     }
 </style>

@@ -13,6 +13,7 @@ let content = "collection"
 async function signOut(){    
     $isAuthenticated = false
     $user = {}
+    //TODO disconnect socket in case window stays open after clicking sign out????
     await fetch("/auth/signout").then(res => {
             if (res.ok) {
                     toast.push("Your are logged out", {

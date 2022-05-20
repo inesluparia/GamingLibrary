@@ -92,15 +92,17 @@ io.on("connection", (socket) => {
 			if (socketIdByUser.has(data.reciever)){
 				const recieverSocketId = socketIdByUser.get(data.reciever)
 				console.log("recieverSocketId: ", recieverSocketId)
-				// io.to(recieverSocketId).emit('notify reciever', data);
 				socket.to(recieverSocketId).emit('notify reciever', data);
 			}
 		} else new Error("unautharized")
 	})
 
     socket.on("disconnect", () => {
-		socketIdByUser.delete(sessionUsername)
-		console.log("socket disconnected", socketIdByUser)
+		// socketIdByUser.delete(sessionUsername)
+		for (const [key, value] of socketIdByUser) {
+			if (value === socket.id)
+				socketIdByUser.delete(key)
+		} console.log("socket disconnected", socketIdByUser)
 	})
 });
 

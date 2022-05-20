@@ -48,7 +48,6 @@
          <img
             src="/images/{game.img}"
             alt={game.name}
-            style="height:600px;width:auto;"
          />
       </div>
    </div>
@@ -76,7 +75,6 @@
       {:else}
          <NewMessage reciever={game.username} notifySocket={notifySocket}></NewMessage>
       {/if}
-
    </div>
 </div>
 
@@ -95,14 +93,14 @@
    }
 
    img {
-      width: 400px;
+      height: 500px;
       -webkit-transition: 0.5s ease-in-out;
       transition: 0.5s ease-in-out;
       cursor: pointer;
    }
    img:hover {
-      -webkit-transform: scale(1.05);
-      transform: scale(1.05);
+      -webkit-transform: scale(1.02);
+      transform: scale(1.02);
    }
 
    #txt-wrapper {

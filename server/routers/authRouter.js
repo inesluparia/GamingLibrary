@@ -4,8 +4,8 @@ import db from "../database/createMySQLConnection.js"
 
 import bcrypt from "bcrypt"
 
-router.get("auth/getuser", (req, res)=> {
-    res.send(req.session.username)
+router.get("/auth/getuser", (req, res)=> {
+    res.send({username : req.session.username})
 })
 
 router.get("/auth/signout", (req, res) => {

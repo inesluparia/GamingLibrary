@@ -79,12 +79,18 @@ import { navigate } from "svelte-routing";
             <input name="name" bind:value={name}/>
         </div>        
         <div>
-            <label for="platform">Platform</label>
-            <input name="platform" bind:value={platform}/>
-        </div>        
-        <div>
             <label for="year">Year</label>
             <input name="year" bind:value={year}/>
+        </div>        
+        <div>
+            <label for="platform">Platform</label>
+            <select bind:value={platform}>
+                <option value="PS4">PS4</option>
+                <option value="PS5">PS5</option>
+                <option value="Xbox">Xbox</option>
+                <option value="Switch">Switch</option>
+                <option value="Wii">Wii</option>
+            </select>
         </div>        
         <div class="error-message">
             <small>{error}</small>
@@ -93,6 +99,10 @@ import { navigate } from "svelte-routing";
     </div>
 </div>
 <style>
+
+ select {
+    width: 200px;
+ }   
 #wrapper {
     display: flex;
 }
