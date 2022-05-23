@@ -1,5 +1,5 @@
 <script>
-import Library from "./Library.svelte";
+import Library from "./GameLibrary.svelte";
 
 </script>
 

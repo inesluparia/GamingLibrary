@@ -1,9 +1,11 @@
 <script>
    import { onMount } from "svelte"
    import { navigate } from "svelte-routing"
-   import NewMessage from "../../components/NewMessage.svelte"
+   import { toast } from "@zerodevx/svelte-toast"
    import { isAuthenticated, user } from "../../stores/store"
-   import { toast } from '@zerodevx/svelte-toast'
+   import { deleteGame, getGameById } from "../../services/GamesService"
+   import { toastSuccessOptions } from "../../utils/utils"
+   import NewMessage from "../../components/NewMessage.svelte"
 
    export let id = ""
    export let isFav = false
@@ -12,29 +14,12 @@
    let renderMessageForm = false
    let game = {}
    
-   onMount(async () => {
-      const res = await fetch(`/api/games/${id}`)
-      const data = await res.json()
-      game = data
-   });
+   onMount( async () => game = await getGameById(id))
 
-   async function deleteGame() {
-      const res = await fetch(`/api/${$user.username}/games/${id}`, { method: "DELETE" })
-         .then((res) => {
-            if (res.ok) {
-               toast.push('The game was deleted!')
-               navigate("/profile");
-            } else {
-               return res.json().then((body) => {
-                  alert(body.message);
-               });
-            }
-         })
-         .catch((err) => {
-            console.log(err);
-            error = err;
-            alert(err.message);
-         });
+   function onDeleteGame() {
+      deleteGame($user.username, id)
+      toast.push('Your game was deleted!', toastSuccessOptions)
+      navigate('/')
    }
 
 </script>
@@ -60,7 +45,7 @@
             <p>Platform: {game.platform}</p>
             <p>Owner: {game.username}</p>
             {#if game.owner_id === $user.userId}
-               <button on:click|preventDefault={deleteGame}
+               <button on:click|preventDefault={onDeleteGame}
                   >Delete from your collection</button
                >
             {:else}

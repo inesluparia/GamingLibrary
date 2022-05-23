@@ -1,14 +1,15 @@
 <script>
     import { onMount } from "svelte";
     import Game from "../../components/Game.svelte"
+    import { getAllGames } from "../../services/GamesService"
+
 
     let games = []
     $: gamesToDisplay = []
     let searchInput = ""
-
+    
     onMount( async () => {
-        const response = await fetch("/api/games")
-        const {data: gamesData} = await response.json()
+        const {data: gamesData} = await getAllGames()
         games = gamesData
         gamesToDisplay = gamesData
     })
