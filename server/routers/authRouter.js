@@ -11,7 +11,7 @@ router.get("/auth/getuser", (req, res)=> {
 router.get("/auth/signout", (req, res) => {
     req.session.username = undefined
     req.session.userId = undefined
-    res.status(200).send()
+    res.status(200).send({data: "ok"})
 })
 
 router.post("/auth/signup", async (req, res) => {

@@ -3,25 +3,13 @@ import { onMount } from "svelte"
 import ListMessage from "./ListMessage.svelte"
 import Message from "./Message.svelte"
 import { user } from "../../stores/store"
+import { getUserMessages } from "../../services/MessagesService";
 
 let messages = []
 
-onMount( ()=> {
-    // const res = await fetch(`/api/${$user.username}/msgs`)
-    // const {data: msgsData} = await res.json()
-    // messages = msgsData
-    fetch(`/api/${$user.username}/msgs`)
-    .then( res => {
-        if (res.ok){
-            res.json().then( json => {
-                messages = json.data
-            })            
-        } else {
-            return res.json().then((body) => {
-                alert(body.message)
-            });
-        }
-    })
+onMount( async ()=> {
+    const response = await getUserMessages(username)
+    messages = response.data
 })
 
 let display = "activities"

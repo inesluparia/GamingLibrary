@@ -17,8 +17,6 @@
 	import io from "socket.io-client"
 	import { onMount } from "svelte";
 	
-	//don't I have to declare socket outside for it to persist after the function?
-	//do I need OnMount here???
 	onMount(async () => {
 		const res = await fetch("/auth/getuser")
 		const {username} = await res.json()

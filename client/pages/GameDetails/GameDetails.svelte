@@ -17,9 +17,11 @@
    onMount( async () => game = await getGameById(id))
 
    function onDeleteGame() {
-      deleteGame($user.username, id)
-      toast.push('Your game was deleted!', toastSuccessOptions)
-      navigate('/')
+      let ok = deleteGame($user.username, id)
+      if (ok) {
+         toast.push('Your game was deleted!', toastSuccessOptions)
+         navigate('/')
+      }
    }
 
 </script>

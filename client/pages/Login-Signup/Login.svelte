@@ -1,5 +1,6 @@
 <script>
     import { navigate } from "svelte-routing"
+import { loginPost } from "../../services/AuthService";
     import { isAuthenticated, user } from "../../stores/store"
 
     let error = ""
@@ -9,35 +10,12 @@
     export let loginSocket
 
     async function login() {
-        await fetch("/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    return res.json().then((body) => {
-                        alert(body.message)
-                    });
-                } else {
-                    return res.json().then((jsonUser) => {
-                        user.set(jsonUser)
-                        isAuthenticated.set(true)
-                        loginSocket()
-                        navigate("/profile", { replace: true })
-                    })
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-                error = err
-                alert(err.message)
-            })
+        const fetchedUser = await loginPost(email, password)
+        user.set(fetchedUser)
+        isAuthenticated.set(true)
+        loginSocket()
+        //fix to navigate to last page!
+        navigate("/profile", { replace: true })
     }
 
 </script>

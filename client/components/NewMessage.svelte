@@ -1,6 +1,10 @@
 <script>
-import { user } from "../stores/store";
-import { navigate } from "svelte-routing";
+import { user } from "../stores/store"
+import { navigate } from "svelte-routing"
+import { toast } from "@zerodevx/svelte-toast"
+import { toastSuccessOptions } from "../utils/utils"
+import { createMessage } from "../services/MessagesService"
+
 export let reciever
 let content = `Hi ${reciever}! 
 \nDo you want to exchange games?
@@ -8,43 +12,18 @@ let content = `Hi ${reciever}!
 let error = ""
 export let notifySocket
 
-function sendMessage() {
-    let time = new Date()
-    time = time.toISOString().slice(0, 19).replace('T', ' ')
-    fetch(`/api/${$user.username}/msgs`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                time,
-                content,
-                reciever
-            }),
+async function sendMessage() {
+    const ok = await createMessage($user.username, content, reciever)
+    if (ok) {
+        toast.push("Your message was sent!", toastSuccessOptions)
+        notifySocket({
+            sender: $user.username,
+            reciever: reciever,
+            content: content
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json().then(() => {                        
-                    alert("Your message was sent!")
-                    notifySocket({
-                        sender: $user.username,
-                        reciever: reciever,
-                        content: content
-                    })
-                    navigate("/profile")
-                    });
-            } else {
-                return res.json().then((body) => {
-                    alert(body.message)
-                })
-            }
-        })
-        .catch((err) => {
-                console.log(err)
-                error = err
-                alert(err.message)
-            });
-}
+        navigate("/profile")
+    }
+}   
 </script>
 
 <div id="container">

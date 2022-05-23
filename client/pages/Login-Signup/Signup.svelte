@@ -1,59 +1,35 @@
 <script>
-    import { navigate } from "svelte-routing";
-    import { user, isAuthenticated } from "../../stores/store"
+import { navigate } from "svelte-routing";
+import { user, isAuthenticated } from "../../stores/store"
+import { signupPost } from "../../services/AuthService"
 
-    let username = ""
-    let email = ""
-    let phone = ""
-    let password = ""
-    let confPassword = ""
-    let error = ""
+let username = ""
+let email = ""
+let phone = ""
+let password = ""
+let confPassword = ""
+let error = ""
 
-    async function signup() {
-        await fetch("/auth/signup", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                phone,
-                password
-            }),
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    return res.json().then((body) => {
-                        alert(body.message)
-                    })
-                } else {
-                    const newUser = res.json()
-                    if (newUser !== undefined) {
-                        user.set({
-                            username: newUser.username,
-                            userId: newUser.userId,
-                        })
-                        isAuthenticated.set(true)
-                    }
-                    navigate("/profile")
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-                error = err
-                alert(err.message)
-            })
-        }
+async function signup() {
+    const newUser = await signupPost(username, email, phone, password)
+    if (newUser !== undefined) {
+                user.set({
+                    username: newUser.username,
+                    userId: newUser.userId,
+                })
+                isAuthenticated.set(true)
+            }
+            navigate("/profile")
+}
 
-    function checkPasswords() {
-        error = password !== confPassword ? "Passwords do not match" : ""
-    }
+function checkPasswords() {
+    error = password !== confPassword ? "Passwords do not match" : ""
+}
 </script>
 
 <div>
     <h2>Sign up</h2>
-    <form autocomplete="off" on:submit|preventDefault={signup}>
+    <form autocomplete="off">
         <input
             autocomplete="false"
             name="hidden"
@@ -97,16 +73,12 @@
         <div class="error-message">
             <small>{error}</small>
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit" on:click|preventDefault={signup}>Sign up</button>
     </form>
 </div>
 
 <style>
     input {
-        /* border: 1px solid #555;
-        box-sizing: border-box;
-        height: 30px;
-        padding-left: 50px; */
         width: 300px;
     }
     button {

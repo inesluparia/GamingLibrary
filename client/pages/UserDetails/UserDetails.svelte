@@ -1,20 +1,17 @@
 <script>
-    import { onMount } from "svelte";
-    import Game from "../../components/Game.svelte"
-    import { isAuthenticated } from "../../stores/store"
-    import NewMessage from "../../components/NewMessage.svelte"
-    import { navigate } from "svelte-routing";
-    export let username
+import { onMount } from "svelte";
+import Game from "../../components/Game.svelte"
+import { isAuthenticated } from "../../stores/store"
+import NewMessage from "../../components/NewMessage.svelte"
+import { navigate } from "svelte-routing";
+export let username
 
-    let games = []
+let games = []
 
-    onMount( async () => {
-        const response = await fetch( `/api/${username}/games`)
-        const gamesData = await response.json()
-        games = gamesData
-    })
+onMount( async () => { games = await getGamesByUser(username) })
 
-    let renderMessageForm = false
+let renderMessageForm = false
+
 </script>
 
 {#if renderMessageForm}
@@ -28,9 +25,9 @@
         {/each}
     </div>
 </div>
-<button on:click|preventDefault={()=> $isAuthenticated ? renderMessageForm = true : navigate("/login")}
-    >Contact {username}</button
- >
+<button 
+    on:click|preventDefault={()=> $isAuthenticated ? renderMessageForm = true : navigate("/login")}
+    >Contact {username}</button>
 
  {/if}
 <style>

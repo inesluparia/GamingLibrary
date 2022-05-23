@@ -7,31 +7,20 @@ import AddGame from "./AddGame.svelte"
 import Messages from "./Messages.svelte"
 import { navigate } from "svelte-routing"
 import { toast } from "@zerodevx/svelte-toast"
+import { singoutGet } from "../../services/AuthService"
+import { toastSuccessOptions } from "../../utils/utils"
 
 let content = "collection"
 
 async function signOut(){    
     $isAuthenticated = false
     $user = {}
-    //TODO disconnect socket in case window stays open after clicking sign out????
-    await fetch("/auth/signout").then(res => {
-            if (res.ok) {
-                    toast.push("Your are logged out", {
-                        theme: {'--toastBackground': '#2F855A' }
-                    })
-                    navigate("/")
-            }
-            else {
-                return res.json().then((body) => {
-                    toast.push(body.message, {
-                        theme: {
-                            '--toastBackground': '#F56565',
-                            '--toastBarBackground': '#C53030'
-                        }
-                    })
-                })
-            }    
-})}
+    const ok = await singoutGet()
+    if (ok) {
+        toast.push("Your are logged out", toastSuccessOptions)
+        navigate("/")
+    }
+}
 
 </script>
 

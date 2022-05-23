@@ -4,8 +4,8 @@ export let loginSocket
 import Login from "./Login.svelte"
 import Signup from "./Signup.svelte"
 let toggle = true
-
 </script>
+
 <div>
  
     <button class:active="{toggle}" on:click={() => toggle = true } >I already have a user</button>
@@ -22,8 +22,6 @@ let toggle = true
 
 <style>
     .active {
-        /* background: linear-gradient(to right, rgb(91, 79, 247), rgb(255, 17, 17)); */
-        /* background: linear-gradient(to right, rgb(248, 149, 49), rgb(246, 35, 35)); */
         background-color: rgb(255, 173, 21); 
         color:white;
     }
@@ -41,10 +39,3 @@ let toggle = true
         cursor: pointer;
     }
 </style>
-
-<!--    
-{#if toggle == 'true'}
-<button class:active="{active}" on:click="{() => {handleToggle();}}">{text}</button>
-{:else}
-<button on:click="{() => {handleDispatch({sendDispatch});}}">{text}</button>
-{/if} -->

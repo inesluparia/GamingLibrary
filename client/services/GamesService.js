@@ -11,17 +11,38 @@ export const getAllGames = async () => {
 
 export const getGameById = async (id) => {
    const data = await fetch(`/api/games/${id}`)
-      .then(handleApiErrors)
-      .catch((error) => {
-         handleCatchedErrors(error)
-      })
+   .then(handleApiErrors)
+   .catch((error) => {
+      handleCatchedErrors(error)
+   })
    return data   
 }
-
-export const deleteGame = async (username, gameId) => {
-   const res = await fetch(`/api/${username}/games/${gameId}`, { method: "DELETE" })
+export const getGamesByUser = async (username) => {
+   const response = await fetch(`/api/${username}/games`)
       .then(handleApiErrors)               
       .catch((error) => {
          handleCatchedErrors(error)
       })
+   return response   
+}
+
+export const deleteGame = async (username, gameId) => {
+   const response = await fetch(`/api/${username}/games/${gameId}`, { method: "DELETE" })
+      .then(handleApiErrors)               
+      .catch((error) => {
+         handleCatchedErrors(error)
+      })
+   return response   
+}
+
+export const createGame = async (username, form) => {
+   const response = await fetch(`/api/${username}/games`, {
+         method: "POST",
+         body: form
+   })
+   .then(handleApiErrors)               
+   .catch((error) => {
+      handleCatchedErrors(error)
+   })
+   return response
 }
