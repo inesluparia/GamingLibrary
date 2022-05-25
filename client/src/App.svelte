@@ -80,7 +80,7 @@
 			<Route path="/login"><Login loginSocket={socketLogin}/></Route>
 			<Route path="/profile">
 				{#if $isAuthenticated}
-					<Profile />
+					<Profile notifySocket={socketNewMessage}/>
 				{:else}
 					<Login loginSocket={socketLogin}/>
 				{/if}	

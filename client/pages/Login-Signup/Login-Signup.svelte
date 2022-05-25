@@ -1,26 +1,30 @@
 <script>
-export let loginSocket
-    
 import Login from "./Login.svelte"
 import Signup from "./Signup.svelte"
+
+export let loginSocket
 let toggle = true
+
 </script>
 
-<div>
- 
-    <button class:active="{toggle}" on:click={() => toggle = true } >I already have a user</button>
-
-    <button class:active="{!toggle}" on:click={() => toggle = false } >I am new here</button>
-</div>
-<div>
-    {#if toggle}
-    <Login loginSocket={loginSocket}></Login>
-    {:else}
-    <Signup></Signup>
-    {/if}
+<div id="container">
+    <div>
+        <button class:active="{toggle}" on:click={() => toggle = true } >I already have a user</button>
+        <button class:active="{!toggle}" on:click={() => toggle = false } >I am new here</button>
+    </div>
+    <div>
+        {#if toggle}
+        <Login loginSocket={loginSocket}></Login>
+        {:else}
+        <Signup></Signup>
+        {/if}
+    </div>
 </div>
 
 <style>
+    #container {
+        margin-top: 5%;
+    }
     .active {
         background-color: rgb(255, 173, 21); 
         color:white;

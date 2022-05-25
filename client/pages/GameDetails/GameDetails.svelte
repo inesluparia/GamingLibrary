@@ -11,7 +11,7 @@
    export let isFav = false
    export let notifySocket
 
-   let renderMessageForm = false
+   let renderNewMessage = false
    let game = {}
    
    onMount( async () => game = await getGameById(id))
@@ -40,7 +40,7 @@
    </div>
 
    <div class="flex-child">
-      {#if !renderMessageForm}
+      {#if !renderNewMessage}
          <div id="txt-wrapper">
             <h2>{game.name}</h2>
             <p>Year: {game.year}</p>
@@ -54,7 +54,9 @@
                <button on:click|preventDefault={() => navigate(`/users/${game.username}`)}
                   >See {game.username}'s collection</button
                >
-               <button on:click|preventDefault={()=> $isAuthenticated ? renderMessageForm = true : navigate("/login")}
+               <button on:click|preventDefault={()=> $isAuthenticated ? renderNewMessage = true : navigate("/login", {
+                  replace: true
+                })}
                   >Contact {game.username}</button
                >
                {/if}
@@ -115,7 +117,6 @@
       box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
       cursor: pointer;
    }
-
    #heart {
       font-size: x-large;
       position: absolute;
@@ -124,7 +125,6 @@
       z-index: 1;
       cursor: pointer;
    }
-
    span {
       font-size: larger;
       font-weight: bold;

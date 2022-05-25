@@ -1,5 +1,11 @@
 import { toast } from "@zerodevx/svelte-toast"
 
+export function pretifyTime(time){
+   const dateTime = new Date(time)
+   const prettyTime = dateTime.getHours() + ":" + dateTime.getMinutes() + " " + dateTime.getDate() + "/" + dateTime.getMonth()
+   return prettyTime
+}
+
 export function handleApiErrors(response) {
     if (!response.ok) {
        return response.json().then((body) => {

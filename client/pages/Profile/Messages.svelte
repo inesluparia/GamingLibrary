@@ -3,17 +3,23 @@ import { onMount } from "svelte"
 import ListMessage from "./ListMessage.svelte"
 import Message from "./Message.svelte"
 import { user } from "../../stores/store"
-import { getUserMessages } from "../../services/MessagesService";
+import { getUserMessages } from "../../services/MessagesService"
+
+export let notifySocket
 
 let messages = []
 
 onMount( async ()=> {
-    const response = await getUserMessages(username)
+    const response = await getUserMessages($user.username)
     messages = response.data
 })
 
-let display = "activities"
+let display = "messages"
 let messageToOpen = {}
+
+function displayMessages() {
+    display = "messages"
+}
 
 function showMessage(id){
     messageToOpen = messages.find( m => m.id == id)
@@ -21,7 +27,7 @@ function showMessage(id){
 }
 
 </script>
-<div class:hide={display !== "activities"}>
+<div class:hide={display !== "messages"}>
     {#if messages.length}
         <h3>Your recent activity</h3>
         <div id="wrapper">
@@ -34,7 +40,7 @@ function showMessage(id){
     {/if}
 </div>
 {#if display === "message"}
-    <Message {...messageToOpen}/>
+    <Message {...messageToOpen} notifySocket={notifySocket} goBack={displayMessages}/>
 {/if}
 <div class:hide={display !== "newMessage"}>
 

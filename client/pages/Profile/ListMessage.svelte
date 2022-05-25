@@ -1,5 +1,6 @@
 <script>
 import { user } from "../../stores/store"
+import { pretifyTime } from "../../utils/utils";
 
     export let time
     export let sender
@@ -9,15 +10,14 @@ import { user } from "../../stores/store"
     export let is_read
     export let renderMessage
 
-    time = new Date(time)
-    time = time.getHours() + ":" + time.getMinutes() + " " + time.getDate() + "/" + time.getMonth() 
+    time = pretifyTime(time)
 
     $: showAsRead = sender === $user.username ? true : is_read
 
     function openMessage() {
         if (!showAsRead) {
             //fetch and update state
-            is_read = true
+            showAsRead = true
         }
         renderMessage(id)
     }

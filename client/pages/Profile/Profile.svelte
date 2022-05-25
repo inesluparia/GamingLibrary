@@ -10,6 +10,8 @@ import { toast } from "@zerodevx/svelte-toast"
 import { singoutGet } from "../../services/AuthService"
 import { toastSuccessOptions } from "../../utils/utils"
 
+export let notifySocket
+
 let content = "collection"
 
 async function signOut(){    
@@ -24,7 +26,7 @@ async function signOut(){
 
 </script>
 
-<h1>Hello {$user.username}!</h1>
+<h1>Hello {$user.username} :)</h1>
 
 <div class="flex-container">
     <div id="options" class="flex-child">
@@ -43,7 +45,7 @@ async function signOut(){
             <GamesCollection/>
         {/if}
         {#if content === "activities"}
-            <Messages/>
+            <Messages notifySocket={notifySocket}/>
         {/if}
         {#if content === "settings"}
             <Settings/>
@@ -58,6 +60,7 @@ async function signOut(){
 .flex-container{
 display: flex;
 justify-content: space-around;
+margin: 0 10%;
 }
 
 #signout {
@@ -105,4 +108,8 @@ button:hover {
         margin:auto;
         justify-content: center;
 }    
+h1 {
+    margin-top: 50px;
+    margin-bottom: 0;
+}
 </style>

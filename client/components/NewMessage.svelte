@@ -6,11 +6,13 @@ import { toastSuccessOptions } from "../utils/utils"
 import { createMessage } from "../services/MessagesService"
 
 export let reciever
+export let notifySocket
+export let goBack
+
 let content = `Hi ${reciever}! 
 \nDo you want to exchange games?
-\nCheck out my collection and let's get in touch!`
+\nCheck out my collection and let's get in touch!\n\n`
 let error = ""
-export let notifySocket
 
 async function sendMessage() {
     const ok = await createMessage($user.username, content, reciever)
@@ -31,10 +33,11 @@ async function sendMessage() {
     <span>To: {reciever}</span>
     <span>From: {$user.username}</span>
     <p>
-        <textarea bind:value={content} type="text"></textarea>
+        <textarea bind:value={content} type="text" autofocus></textarea>
     </p>
     <small>{error}</small>
     <button on:click={sendMessage}>Send message</button>
+    <button on:click|preventDefault={goBack}>Go back</button>
 </div>
 
 <style>
@@ -47,7 +50,7 @@ async function sendMessage() {
     }
     textarea {
         width: 80%;
-        height: 400px;
+        height: 300px;
         padding: 12px 20px;
         box-sizing: border-box;
         border: 2px solid #ccc;
