@@ -1,9 +1,11 @@
 <script>
-import { onMount } from "svelte";
-import Game from "../../components/Game.svelte"
+import { onMount } from "svelte"
+import { navigate } from "svelte-routing"
 import { isAuthenticated } from "../../stores/store"
+import { getGamesByUser } from "../../services/GamesService"
+import Game from "../../components/Game.svelte"
 import NewMessage from "../../components/NewMessage.svelte"
-import { navigate } from "svelte-routing";
+
 export let username
 
 let games = []

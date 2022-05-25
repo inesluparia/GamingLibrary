@@ -11,11 +11,13 @@ import { loginPost } from "../../services/AuthService";
 
     async function login() {
         const fetchedUser = await loginPost(email, password)
-        user.set(fetchedUser)
-        isAuthenticated.set(true)
-        loginSocket()
-        //fix to navigate to last page!
-        navigate("/profile", { replace: true })
+        if (fetchedUser) {
+            user.set(fetchedUser)
+            isAuthenticated.set(true)
+            loginSocket()
+            //fix to navigate to last page!
+            navigate("/profile", { replace: true })
+        }
     }
 
 </script>

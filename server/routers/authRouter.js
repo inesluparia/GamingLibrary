@@ -33,7 +33,6 @@ router.post("/auth/signup", async (req, res) => {
 router.post("/auth/login", async (req, res) => {
     const { email, password } = req.body
     db.query(`SELECT password, username, id FROM users WHERE email = ?;`, [email], async function (err , result){
-        
         if (err) 
             res.status(409).send({ message: "There has been an error: " + err.message })
 
@@ -44,8 +43,8 @@ router.post("/auth/login", async (req, res) => {
                 req.session.username = result[0].username
                 res.status(200).send({ username: result[0].username, userId: result[0].id })
             }
-            else res.status(400).send({ message: "Incorrect password." })
-        } else res.status(404).send({ message: "Email was not found."})
+            else res.status(400).send({ message: "The password was incorrect." })
+        } else res.status(404).send({ message: "The email was not found."})
     })
 })
 
