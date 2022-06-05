@@ -24,6 +24,10 @@ async function signOut(){
     }
 }
 
+function showCollection() {
+    content = "collection"
+}
+
 </script>
 
 <h1>Hello {$user.username} :)</h1>
@@ -51,7 +55,7 @@ async function signOut(){
             <Settings/>
         {/if}
         {#if content === "addGame"}
-            <AddGame/>
+            <AddGame backToCollection={showCollection}/>
         {/if}
     </div>
 </div>

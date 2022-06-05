@@ -1,6 +1,6 @@
 import db from "./createMySQLConnection.js"
 
-let inDeleteMode = false
+let inDeleteMode = true
 
 if (inDeleteMode) {
     db.query("DROP TABLE IF EXISTS favorites;")
@@ -63,6 +63,7 @@ db.query(`
 if (inDeleteMode) {
     db.query(`INSERT INTO users (username, email, phone_nr, password) VALUES 
     ('Ines', 'ines@ines', 01010101, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa'),
+    ('Hugo', 'hugo@hugo', 88888888, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa'),
     ('Luca', 'luca@luca', 22222222, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa')
     `)
 
@@ -70,8 +71,16 @@ if (inDeleteMode) {
     ('Super Mario Odissey', 'Nintendo Switch', '2017', 1, 'smodissey.jpg'),
     ('Sonic Forces', 'Nintendo Switch', '2017', 1, 'sonic-forces.jpg'),
     ('Minecraft', 'Nintendo Switch', '2011', 1, 'minecraft-ns.jpg'),
-    ('Super Mario Odissey', 'PS4', '2017', 2, 'smodissey.jpg'),
+    ('Assetto Corsa Competizione', 'PS4', '2005', 3, 'assetto-corsa-competizione-ps4.jpg'),
+    ('Bugsnax', 'PS4', '2014', 3, 'bugsnax-ps4.jpg'),
+    ('Grand Theft Auto St Andreas', 'PS4', '2014', 3, 'gta.jpg'),
+    ('Lego Star Wars', 'PS4', '2012', 3, 'lego-star-wars.jpg'),
+    ('Luigi's Mansion 3', 'Nintendo Switch', '2005', 3, 'luigis-mansion-3.jpg'),
     ('Sonic Forces', 'PS4', '2017', 2, 'sonic-forces.jpg'),
+    ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg'),
+    ('No more heroes III', 'Nintendo Switch', '2011', 2, 'no-more-heroes.jpg'),
+    ('Plants Vs Zombies', 'Nintendo Switch', '2011', 1, 'plantsVsZombies.jpg'),
+    ('Pokemon Arceus', 'Nintendo Switch', '2011', 1, 'pokemon.jpg'),
     ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg')
     `);
 }

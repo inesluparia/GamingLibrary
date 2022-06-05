@@ -29,7 +29,7 @@ function checkPasswords() {
 
 <div>
     <h2>Sign up</h2>
-    <form autocomplete="off">
+    <form autocomplete="off" on:submit|preventDefault={signup}>
         <input
             autocomplete="false"
             name="hidden"
@@ -38,7 +38,7 @@ function checkPasswords() {
         />
         <div>
             <label for="username">Username</label>
-            <input type="username" bind:value={username} />
+            <input type="username" bind:value={username} required/>
         </div>
         <div>
             <label for="email">Email</label>
@@ -46,11 +46,12 @@ function checkPasswords() {
                 type="email"
                 bind:value={email}
                 autocomplete="new-password"
-            />
+                required/>
         </div>
         <div>
             <label for="phone">Phone Nr</label>
-            <input id="phone" bind:value={phone} />
+            <input id="phone" pattern="[0-9]{8}" title="8 digit phone number"
+            bind:value={phone} required>
         </div>
         <div>
             <label for="password">Password</label>
@@ -59,7 +60,7 @@ function checkPasswords() {
                 type="password"
                 bind:value={password}
                 autocomplete="new-password"
-            />
+                required/>
         </div>
         <div>
             <label for="password">Password confirmation</label>
@@ -68,12 +69,12 @@ function checkPasswords() {
                 type="password"
                 bind:value={confPassword}
                 autocomplete="new-password"
-            />
+                required/>
         </div>
         <div class="error-message">
             <small>{error}</small>
         </div>
-        <button type="submit" on:click|preventDefault={signup}>Sign up</button>
+        <button type="submit">Sign up</button>
     </form>
 </div>
 

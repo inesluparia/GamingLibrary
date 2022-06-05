@@ -40,39 +40,44 @@ import multer from "multer"
 import fs from "fs"
 const upload = multer() // const upload = multer({limits: {fileSize:20000}})
 
-router.post("/api/:username/games", upload.single('uploaded_img'), async (req, res) => {
+router.post("/api/:username/games", upload.single('uploaded_img'), async (req, res, next) => {
   const username = req.params.username
   const { name, platform, year } = req.body
   const imgName = req.file.originalname
   if (req.session.username === username) {
-    await fs.promises.writeFile('../client/public/images/'+ req.file.originalname, req.file.buffer)
-    db.query('INSERT INTO games (name, platform, year, img, owner_id) VALUES (?, ?, ?, ?, ?);',
+      try {
+        await fs.promises.writeFile('../client/public/images/'+ req.file.originalname, req.file.buffer)
+      } catch (err) {
+        next(err)
+      }
+      db.query('INSERT INTO games (name, platform, year, img, owner_id) VALUES (?, ?, ?, ?, ?);',
       [name, platform, year, imgName, req.session.userId], function (err, result) {
         if (!err) {
           res.status(201).send({ gameId: result.insertId })
         }
         else res.status(409).send({ message: "There has been an error: " + err.message })
+        // else next(err) // Pass errors to Express.
       })
-  } else {
-    res.status(404).send({ message: "Not authorized!" })
-  }
+    } else {
+      res.status(404).send({ message: "Not authorized!" })
+    }
 })
 
-//update endpoint not testet nor implementet yet!
-router.post("/api/:username/games/:id", (req, res) => {
-  const { name, platform, year, img } = req.body
-  if (req.session.username === req.params.username) {
-    db.query('UPDATE games SET name = ?, platform = ?, year = ?, img = ? WHERE id = ?;',
-      [name, platform, year, img, req.params.id], function (err, result) {
-        if (!err) {
-          res.status(200).send({ result })
-        }
-        else res.status(409).send({ message: "There has been an error: " + err.message })
-      })
-  } else {
-    res.status(404).send({ message: "Not authorized!" })
-  }
-})
+// //update endpoint not testet nor implementet yet!
+// router.post("/api/:username/games/:id", (req, res) => {
+//   const { name, platform, year, img } = req.body
+//   if (req.session.username === req.params.username) {
+//     db.query('UPDATE games SET name = ?, platform = ?, year = ?, img = ? WHERE id = ?;',
+//       [name, platform, year, img, req.params.id], function (err, result) {
+//         if (!err) {
+//           res.status(200).send({ result })
+//         }
+//         else res.status(409).send({ message: "There has been an error: " + err.message })
+//       })
+//   } else {
+//     res.status(404).send({ message: "Not authorized!" })
+//   }
+// })
 
 //delete game
 router.delete("/api/:username/games/:id", (req, res) => {

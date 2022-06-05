@@ -1,5 +1,5 @@
 <script>
-   import { onMount } from "svelte"
+   import { afterUpdate, onMount } from "svelte"
    import { navigate } from "svelte-routing"
    import { toast } from "@zerodevx/svelte-toast"
    import { isAuthenticated, user } from "../../stores/store"
@@ -19,8 +19,8 @@
    function onDeleteGame() {
       let ok = deleteGame($user.username, id)
       if (ok) {
-         toast.push('Your game was deleted!', toastSuccessOptions)
-         navigate('/')
+         navigate("/profile", {replace:true})
+         toast.push("Your game was deleted!", toastSuccessOptions)
       }
    }
 

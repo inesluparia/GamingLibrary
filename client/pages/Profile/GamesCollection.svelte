@@ -8,6 +8,13 @@ let games = []
 
 onMount( async () => { games = await getGamesByUser($user.username) })
 
+// $: urlParams = new URLSearchParams(window.location.search)
+// $: hasReload = urlParams ? urlParams.has('reload') : false
+
+// $: if (hasReload){
+//     async () => { games = await getGamesByUser($user.username) }
+// } 
+
 </script>
 
 <div>

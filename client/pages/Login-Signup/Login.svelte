@@ -1,6 +1,6 @@
 <script>
     import { navigate } from "svelte-routing"
-import { loginPost } from "../../services/AuthService";
+    import { loginPost } from "../../services/AuthService";
     import { isAuthenticated, user } from "../../stores/store"
 
     let error = ""
@@ -27,11 +27,11 @@ import { loginPost } from "../../services/AuthService";
     <form on:submit|preventDefault={login}>
         <div>
             <label for="email">Email</label>
-            <input type="email" bind:value={email} />
+            <input type="email" bind:value={email} required/>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" bind:value={password} />
+            <input type="password" bind:value={password} required/>
         </div>
 
         <button type="submit">Log in</button>
