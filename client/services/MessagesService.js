@@ -29,3 +29,13 @@ export const getUserMessages = async (username) => {
     })
     return response
 }
+
+export const updateMessage = async (username, messaegId) => {
+    const response = fetch(`/api/${username}/msgs/${messaegId}`, {
+        method: "PUT"
+    }).then(handleApiErrors)
+    .catch( error => {
+        handleCatchedErrors(error)
+    })
+    return response
+}

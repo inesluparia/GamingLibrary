@@ -13,7 +13,7 @@ router.get("/api/:username/msgs", (req, res) => {
             if (!err) res.send({ data: result })
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })
-    } else res.status(400).send({ message: "Not authorized!" })
+    } else res.status(401).send({ message: "Not authorized!" })
 })
 
 router.post("/api/:username/msgs", (req, res) => {
@@ -25,7 +25,18 @@ router.post("/api/:username/msgs", (req, res) => {
             if (!err) res.status(201).send({ messageId: result.insertId})
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })
-    } else res.status(404).send({ message: "Not authorized!" })
+    } else res.status(401).send({ message: "Not authorized!" })
+})
+
+router.put("/api/:username/msgs/:id", (req, res) => {
+    const username = req.params.username
+    if (req.session.username === username) {
+        db.query(`UPDATE messages SET is_read = true WHERE id = ${req.params.id}`,
+        function (err, result) {
+            if (!err) res.status(200).send({result})
+            else res.status(409).send({ message: "There has been an error: " + err.message })
+        })
+    } else res.status(401).send({ message: "Not authorized!" })
 })
 
 // //NOT TESTED

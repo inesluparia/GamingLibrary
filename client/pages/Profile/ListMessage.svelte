@@ -1,6 +1,7 @@
 <script>
+import { updateMessage } from "../../services/MessagesService"
 import { user } from "../../stores/store"
-import { pretifyTime } from "../../utils/utils";
+import { pretifyTime } from "../../utils/utils"
 
     export let time
     export let sender
@@ -14,13 +15,14 @@ import { pretifyTime } from "../../utils/utils";
 
     $: showAsRead = sender === $user.username ? true : is_read
 
-    function openMessage() {
+    async function openMessage() {
         if (!showAsRead) {
-            //fetch and update state
+            await updateMessage($user.username, id)
             showAsRead = true
         }
         renderMessage(id)
     }
+
 </script>
 
 <div class="container" class:notRead={!showAsRead} on:click={openMessage}>

@@ -59,12 +59,12 @@ router.post("/api/:username/games", upload.single('uploaded_img'), async (req, r
         // else next(err) // Pass errors to Express.
       })
     } else {
-      res.status(404).send({ message: "Not authorized!" })
+      res.status(401).send({ message: "Not authorized!" })
     }
 })
 
 // //update endpoint not testet nor implementet yet!
-// router.post("/api/:username/games/:id", (req, res) => {
+// router.put("/api/:username/games/:id", (req, res) => {
 //   const { name, platform, year, img } = req.body
 //   if (req.session.username === req.params.username) {
 //     db.query('UPDATE games SET name = ?, platform = ?, year = ?, img = ? WHERE id = ?;',
@@ -83,10 +83,11 @@ router.post("/api/:username/games", upload.single('uploaded_img'), async (req, r
 router.delete("/api/:username/games/:id", (req, res) => {
   if (req.session.username === req.params.username) {
     db.query('DELETE FROM games WHERE id = ?;', [req.params.id], function (err, result) {
-        res.status(200).send({result})
+        if (!err) res.status(200).send({result})
+        else res.status(409).send({ message: "There has been an error: " + err.message })
       })
-    } else res.status(404).send({ message: "Not authorized!" })
+  } else res.status(401).send({ message: "Not authorized!" })
 })
 
-
 export default router
+
