@@ -28,7 +28,7 @@
         <button on:click|preventDefault={goBack}>Go back</button>
     </div>
 {:else}
-    <NewMessage reciever={reciever} notifySocket={notifySocket} goBack={goBack}></NewMessage>
+    <NewMessage reciever={sender === $user.username ? reciever : sender} notifySocket={notifySocket} goBack={goBack}></NewMessage>
 {/if}
 
 <style>

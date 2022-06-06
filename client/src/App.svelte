@@ -39,17 +39,11 @@
 		socket = io()
 		socket.emit("login", {username: $user.username})
 		socket.on("notify reciever", (data)=> {
-			toast.push(`You just recieved a new message from ${data.sender}!`, {
-				theme: {
-					'--toastBackground': '#F56565',
-					'--toastBarBackground': '#C53030'
-				}
-			})
+			toast.push(`You just recieved a new message from ${data.sender}!`)
 		})
 	}
 
 	function socketNewMessage(data){
-		console.log("socket new message called from app.svelte -> data: ", data)
 		socket.emit("new message", data)
 	}
 
@@ -93,7 +87,7 @@
 				<GameDetails id={params.id} notifySocket={socketNewMessage}/>
 			</Route>
 			<Route path="/users/:username" let:params>
-				<UserDetails username={params.username} />
+				<UserDetails username={params.username} notifySocket={socketNewMessage}/>
 			</Route>
 		
 	</main>

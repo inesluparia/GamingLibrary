@@ -78,7 +78,7 @@ function onFileSelected(e) {
             </div>        
             <div>
                 <label for="year">Year</label>
-                <input name="year" bind:value={year} required>
+                <input name="year" bind:value={year} pattern="^199\d|20[0-2]\d|2030$" title="A valid year from 1990" required>
             </div>        
             <div>
                 <label for="platform">Platform</label>

@@ -17,10 +17,6 @@ onMount( async ()=> {
 let display = "messages"
 let messageToOpen = {}
 
-function displayMessages() {
-    display = "messages"
-}
-
 function showMessage(id){
     messageToOpen = messages.find( m => m.id == id)
     display = "message"
@@ -40,7 +36,7 @@ function showMessage(id){
     {/if}
 </div>
 {#if display === "message"}
-    <Message {...messageToOpen} notifySocket={notifySocket} goBack={displayMessages}/>
+    <Message {...messageToOpen} notifySocket={notifySocket} goBack={() => display = "messages"}/>
 {/if}
 <div class:hide={display !== "newMessage"}>
 

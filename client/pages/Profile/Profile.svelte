@@ -38,7 +38,7 @@ function showCollection() {
         <button class:active="{content === "addGame"}" on:click={()=> content = "addGame"} >🎮  Add Game</button>
         <button class:active="{content === "activities"}" on:click={()=> content = "activities"}>🔔  Activities</button>
         <button class:active="{content === "favorites"}" on:click={()=> content = "favorites"}>❤  Favorites</button>
-        <button class:active="{content === "settings"}" on:click={()=> content = "settings"}>⚙  Settings</button>
+        <button class:active="{content === "settings"}" on:click={()=> content = "settings"}>🔧 Settings</button>
         <div id="signout" on:click={signOut} >SIGN OUT</div>
     </div>
     <div id="content" class="flex-child">

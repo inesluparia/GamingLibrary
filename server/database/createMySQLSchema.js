@@ -75,14 +75,16 @@ if (inDeleteMode) {
     ('Bugsnax', 'PS4', '2014', 3, 'bugsnax-ps4.jpg'),
     ('Grand Theft Auto St Andreas', 'PS4', '2014', 3, 'gta.jpg'),
     ('Lego Star Wars', 'PS4', '2012', 3, 'lego-star-wars.jpg'),
-    ('Luigi's Mansion 3', 'Nintendo Switch', '2005', 3, 'luigis-mansion-3.jpg'),
+    ('Luigis Mansion 3', 'Nintendo Switch', '2005', 3, 'luigis-mansion-3.jpg'),
     ('Sonic Forces', 'PS4', '2017', 2, 'sonic-forces.jpg'),
     ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg'),
     ('No more heroes III', 'Nintendo Switch', '2011', 2, 'no-more-heroes.jpg'),
     ('Plants Vs Zombies', 'Nintendo Switch', '2011', 1, 'plantsVsZombies.jpg'),
     ('Pokemon Arceus', 'Nintendo Switch', '2011', 1, 'pokemon.jpg'),
     ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg')
-    `);
+    `)
+
+    // db.query(`INSERT INTO messages VALUES ()`)
 }
 
 db.end()

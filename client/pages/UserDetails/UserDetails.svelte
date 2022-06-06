@@ -7,6 +7,7 @@ import Game from "../../components/Game.svelte"
 import NewMessage from "../../components/NewMessage.svelte"
 
 export let username
+export let notifySocket
 
 let games = []
 
@@ -17,7 +18,7 @@ let renderMessageForm = false
 </script>
 
 {#if renderMessageForm}
-    <NewMessage reciever={username}></NewMessage>
+    <NewMessage notifySocket={notifySocket} reciever={username} goBack={()=> renderMessageForm=false}></NewMessage>
 {:else}
 <div>
     <h2>{username}'s Collection</h2>

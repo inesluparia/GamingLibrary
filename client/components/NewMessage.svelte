@@ -49,7 +49,7 @@ async function sendMessage() {
         margin-top: 30px;
     }
     textarea {
-        width: 80%;
+        width: 250px;
         height: 300px;
         padding: 12px 20px;
         box-sizing: border-box;
