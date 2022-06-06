@@ -16,32 +16,33 @@ import helmet from "helmet"
 app.use(helmet())
 
 // rate limiter
-// /OBS!!! will block all requests if hosted behind a proxy/load balancer (heroku, ngix, etc), then more config needed
+// OBS!!! will block all requests if hosted behind a proxy/load balancer (heroku, ngix, etc), then more config needed
 import rateLimit from 'express-rate-limit'
 
 const baseLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
 	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+	legacyHeaders: false // Disable the `X-RateLimit-*` headers
 });
 
 const authLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 50, // Limit each IP to 5 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+	windowMs: 15 * 60 * 1000,
+	max: 10,
+	standardHeaders: true,
+	legacyHeaders: false
 });
 
-// app.use(baseLimiter)
-// app.use("/auth", authLimiter)
+app.use(baseLimiter)
+app.use("/auth", authLimiter)
 
 //Session
 import session from "express-session"
 const sessionMiddleware = session({
-	secret: process.env.SESSION_SECRET, // desactivated for debugging //
+	secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+	cookie: { maxAge: 60000 * 60 * 24 * 7 } // 1 week
 })
 app.use(sessionMiddleware)
 
@@ -67,38 +68,30 @@ const io = new Server(server)
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
 io.use(wrap(sessionMiddleware))
 
-let socketIdByUser = new Map()	
+let socketIdByUser = new Map()
 
 io.on("connection", (socket) => {
-	console.log("Connected", socket.id)
 	let sessionUsername
 
-  
     socket.on("login", ({ username }) => {
 		sessionUsername = socket.request.session.username
-		console.log("logging point data username and sessionUsername")
-		console.log(username)
-		console.log(sessionUsername)
 		if (username === sessionUsername) {
 			socketIdByUser.set(sessionUsername, socket.id)
-			console.log("on login called", socketIdByUser)
+			console.log("socket login called", socketIdByUser)
 		} else new Error("unautharized")
     });
 
 	socket.on("new message", (data) => {
-		console.log("on.new message was called, data:", data)
-		 const sessionUsername = socket.request.session.username;
+		const sessionUsername = socket.request.session.username
 		if (data.sender === sessionUsername) {
 			if (socketIdByUser.has(data.reciever)){
 				const recieverSocketId = socketIdByUser.get(data.reciever)
-				console.log("recieverSocketId: ", recieverSocketId)
-				socket.to(recieverSocketId).emit('notify reciever', data);
+				socket.to(recieverSocketId).emit('notify reciever', data)
 			}
 		} else new Error("unautharized")
 	})
 
     socket.on("disconnect", () => {
-		// socketIdByUser.delete(sessionUsername)
 		for (const [key, value] of socketIdByUser) {
 			if (value === socket.id)
 				socketIdByUser.delete(key)
