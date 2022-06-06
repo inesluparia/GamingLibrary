@@ -7,6 +7,7 @@
 	import Profile from "../pages/Profile/Profile.svelte"
 	import Logo from "../components/logo.svelte"
 	import Footer from "../components/Footer.svelte"
+	import GdprBanner from "../components/GdprBanner.svelte"
 	
 	import { Route, Router, Link } from "svelte-routing"
 	import { isAuthenticated, user } from "../stores/store"
@@ -26,8 +27,11 @@
 			localStorage.clear()
 			$isAuthenticated = false
 			$user = {}
+			notifyGdpr = true
 		}	
 	})
+
+	let notifyGdpr = false
 
 	let socket 
 
@@ -95,6 +99,9 @@
 	</main>
 	
 </Router>
+{#if notifyGdpr}
+	<GdprBanner accept={() => notifyGdpr = false}></GdprBanner>/>
+{/if}	
 <Footer></Footer>
 
 <style>
