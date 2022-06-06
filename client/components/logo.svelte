@@ -1,6 +1,4 @@
-<img src="./images/logo.png" alt="logo">
-
-<!-- <svg
+<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -107,8 +105,11 @@
   </g>
 </svg>
 
-
- -->
+<style>
+   svg {
+      padding: 3em;
+   }
+</style>
 
 <!-- //SMALL LOGO -->
 <!-- <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="50" width="50" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">

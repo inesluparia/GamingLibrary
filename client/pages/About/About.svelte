@@ -3,12 +3,12 @@
 </script>    
     
 <div>
-    <h1>About page</h1>
-   <Logo></Logo>  
+    <h1>About us</h1>
+    <h3>Our mission is to connect gammers in your neighbourhood.</h3>
+   <Logo/>
 </div>
 <style>
-   div {
-      background-color: rgb(241, 241, 241);
-      height: 300px;
+   h1 {
+      margin-top: 2em;
    }
 </style>

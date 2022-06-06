@@ -5,7 +5,6 @@
 	import UserDetails from "../pages/UserDetails/UserDetails.svelte"
 	import Login from "../pages/Login-Signup/Login-Signup.svelte"
 	import Profile from "../pages/Profile/Profile.svelte"
-	import Logo from "../components/logo.svelte"
 	import Footer from "../components/Footer.svelte"
 	import GdprBanner from "../components/GdprBanner.svelte"
 	
@@ -56,7 +55,7 @@
 	<main>
 		<nav>
 			<div id="logo" class="nav-link">
-				<Link to="/"><Logo/></Link>
+				<Link to="/"><img src="./images/logo.png" alt="logo"></Link>
 			</div>
 			<div class="nav-link">
 				<Link to="/about">ABOUT</Link>
@@ -139,7 +138,7 @@
 		text-align: center;
 		max-width: 240px;
 		margin: 0 auto;
-		min-height: calc(100vh - 3.7em);
+		min-height: calc(100vh - 6em);
 	}
 	@media (min-width: 640px) {
 		main {
