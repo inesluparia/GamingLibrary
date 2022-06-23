@@ -52,8 +52,11 @@ app.use(gamesRouter)
 import authRouter from "./routers/authRouter.js"
 app.use(authRouter)
 
-import usersRouter from "./routers/usersRouter.js"
-app.use(usersRouter)
+import messagesRouter from "./routers/messagesRouter.js"
+app.use(messagesRouter)
+
+import favoritesRouter from "./routers/favoritesRouter.js"
+app.use(favoritesRouter)
 
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve("../client/public/index.html"))
