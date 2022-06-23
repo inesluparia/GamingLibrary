@@ -28,10 +28,19 @@ export const removeFavorite = async (username, gameId) => {
 }
 
 export const getUserFavorites = async (username) => {
-    const response = fetch(`/api/${username}/favs`)
+    const response = await fetch(`/api/${username}/favs`)
     .then(handleApiErrors)
     .catch( error => {
         handleCatchedErrors(error)
     })
     return response
+}
+
+export const isFavorite = async (gameId, username) => {
+    const response = await fetch(`/api/${username}/favs/${gameId}`)
+    .then(handleApiErrors)
+    .catch( error => {
+        handleCatchedErrors(error)
+    })
+    return response.length
 }

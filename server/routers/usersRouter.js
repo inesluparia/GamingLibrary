@@ -42,15 +42,16 @@ router.put("/api/:username/msgs/:id", (req, res) => {
 router.get("/api/:username/favs", (req, res) => {
     const username = req.params.username
     if (req.session.username === username) {
-        db.query(`SELECT * FROM games as g
+        db.query(`SELECT g.id, g.name, g.platform, g.year, g.img, g.owner_id, g.owner_username FROM games as g
         INNER JOIN favorites as f
-        ON f.username = g.username 
+        ON g.id = f.game_id 
         WHERE f.username = ?;`, [username], function (err, result) {
-            if (!err) res.send({ data: result })
+            if (!err) res.status(200).send(result)
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })
     } else res.status(401).send({ message: "Not authorized!" })
 })
+
 
 router.post("/api/:username/favs", (req, res) => {
     const username = req.params.username
@@ -70,6 +71,20 @@ router.delete("/api/:username/favs/:gameid", async (req, res) => {
         WHERE username = ?
         AND game_id = ?;`, [username, req.params.gameid], function (err, result) {
             if (!err) res.status(200).send({ result })
+            else res.status(409).send({ message: "There has been an error: " + err.message })
+        })
+    } else {
+        res.status(401).send({ message: "Not authorized!" })
+    }
+})
+
+router.get("/api/:username/favs/:gameid", async (req, res) => {
+    const username = req.params.username
+    if (req.session.username === username) {
+        db.query(`SELECT id FROM favorites 
+        WHERE username = ?
+        AND game_id = ?;`, [username, req.params.gameid], function (err, result) {
+            if (!err) res.status(200).send( result )
             else res.status(409).send({ message: "There has been an error: " + err.message })
         })
     } else {

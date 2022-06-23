@@ -27,8 +27,11 @@ db.query(`
         year INT,
         img VARCHAR(50),
         owner_id INT NOT NULL,
+        owner_username VARCHAR(30) NOT NULL,
         CONSTRAINT FK_owner_id_game FOREIGN KEY (owner_id)
-        REFERENCES users(id)
+        REFERENCES users(id),
+        CONSTRAINT FK_owner_username_game FOREIGN KEY (owner_username)
+        REFERENCES users(username)
     );`
 )
 
@@ -67,21 +70,21 @@ if (inDeleteMode) {
     ('Luca', 'luca@luca', 22222222, '$2b$12$wGOjPbsPTqUcaPo05O5ZuuqJLSQz1QV7NWUKAVd2udoW1NiqCyHWa')
     `)
 
-    db.query(`INSERT INTO games (name, platform, year, owner_id, img) VALUES 
-    ('Super Mario Odissey', 'Nintendo Switch', '2017', 1, 'smodissey.jpg'),
-    ('Sonic Forces', 'Nintendo Switch', '2017', 1, 'sonic-forces.jpg'),
-    ('Minecraft', 'Nintendo Switch', '2011', 1, 'minecraft-ns.jpg'),
-    ('Assetto Corsa Competizione', 'PS4', '2005', 3, 'assetto-corsa-competizione-ps4.jpg'),
-    ('Bugsnax', 'PS4', '2014', 3, 'bugsnax-ps4.jpg'),
-    ('Grand Theft Auto St Andreas', 'PS4', '2014', 3, 'gta.jpg'),
-    ('Lego Star Wars', 'PS4', '2012', 3, 'lego-star-wars.jpg'),
-    ('Luigis Mansion 3', 'Nintendo Switch', '2005', 3, 'luigis-mansion-3.jpg'),
-    ('Sonic Forces', 'PS4', '2017', 2, 'sonic-forces.jpg'),
-    ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg'),
-    ('No more heroes III', 'Nintendo Switch', '2011', 2, 'no-more-heroes.jpg'),
-    ('Plants Vs Zombies', 'Nintendo Switch', '2011', 1, 'plantsVsZombies.jpg'),
-    ('Pokemon Arceus', 'Nintendo Switch', '2011', 1, 'pokemon.jpg'),
-    ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg')
+    db.query(`INSERT INTO games (name, platform, year, owner_id, owner_username, img) VALUES 
+    ('Super Mario Odissey', 'Nintendo Switch', '2017', 1, 'Ines', 'smodissey.jpg'),
+    ('Sonic Forces', 'Nintendo Switch', '2017', 1, 'Ines', 'sonic-forces.jpg'),
+    ('Minecraft', 'Nintendo Switch', '2011', 1, 'Ines', 'minecraft-ns.jpg'),
+    ('Assetto Corsa Competizione', 'PS4', '2005', 3, 'Luca', 'assetto-corsa-competizione-ps4.jpg'),
+    ('Bugsnax', 'PS4', '2014', 3, 'Luca', 'bugsnax-ps4.jpg'),
+    ('Grand Theft Auto St Andreas', 'PS4', '2014', 3, 'Luca', 'gta.jpg'),
+    ('Lego Star Wars', 'PS4', '2012', 3, 'Luca', 'lego-star-wars.jpg'),
+    ('Luigis Mansion 3', 'Nintendo Switch', '2005', 3, 'Luca', 'luigis-mansion-3.jpg'),
+    ('Sonic Forces', 'PS4', '2017', 2, 'Hugo', 'sonic-forces.jpg'),
+    ('Minecraft', 'PS4', '2011', 2, 'Hugo', 'minecraft-ns.jpg'),
+    ('No more heroes III', 'Nintendo Switch', '2011', 2, 'Hugo', 'no-more-heroes.jpg'),
+    ('Plants Vs Zombies', 'Nintendo Switch', '2011', 1, 'Ines', 'plantsVsZombies.jpg'),
+    ('Pokemon Arceus', 'Nintendo Switch', '2011', 1, 'Ines', 'pokemon.jpg'),
+    ('Minecraft', 'PS4', '2011', 2, 'Hugo', 'minecraft-ns.jpg')
     `)
 
 }

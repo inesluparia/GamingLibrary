@@ -50,8 +50,8 @@ router.post("/api/:username/games", upload.single('uploaded_img'), async (req, r
       } catch (err) {
         next(err)
       }
-      db.query('INSERT INTO games (name, platform, year, img, owner_id) VALUES (?, ?, ?, ?, ?);',
-      [name, platform, year, imgName, req.session.userId], function (err, result) {
+      db.query('INSERT INTO games (name, platform, year, img, owner_id, owner_username) VALUES (?, ?, ?, ?, ?, ?);',
+      [name, platform, year, imgName, req.session.userId, username], function (err, result) {
         if (!err) {
           res.status(201).send({ gameId: result.insertId })
         }

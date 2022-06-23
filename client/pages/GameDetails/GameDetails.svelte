@@ -4,7 +4,7 @@
    import { toast } from "@zerodevx/svelte-toast"
    import { isAuthenticated, user } from "../../stores/store"
    import { deleteGame, getGameById } from "../../services/GamesService"
-   import { addFavorite, removeFavorite } from "../../services/FavoritesService"
+   import { addFavorite, removeFavorite, isFavorite } from "../../services/FavoritesService"
    import { toastSuccessOptions } from "../../utils/utils"
    import NewMessage from "../../components/NewMessage.svelte"
 
@@ -15,7 +15,12 @@
    let renderNewMessage = false
    let game = {}
    
-   onMount( async () => game = await getGameById(id))
+   onMount( async () => {
+      game = await getGameById(id)
+      if ($isAuthenticated){
+         isFav = !!await isFavorite(id, $user.username)
+      }
+   })
 
    function onDeleteGame() {
       let ok = deleteGame($user.username, id)
@@ -26,19 +31,24 @@
    }
 
    function toggleFav(){
-      if (isFav === false){
-         let ok = addFavorite($user.username, id)
-         if (ok) {
-            toast.push("Game added to your favorites list ❤️")
-            isFav = true
+      if ($isAuthenticated){
+      
+         if (isFav === false){
+            let ok = addFavorite($user.username, id)
+            if (ok) {
+               toast.push("Game added to your favorites list ❤️")
+               isFav = true
+            }
+         } else {
+            let ok = removeFavorite($user.username, id)
+            if (ok) {
+               toast.push("Game removed from favorites.")
+               isFav = false
+            }
          }
       } else {
-         let ok = removeFavorite($user.username, id)
-         if (ok) {
-            toast.push("Game removed from favorites.")
-            isFav = false
-         }
-      }
+         navigate('/login', {replace:true})
+      }   
    }
 
 </script>
