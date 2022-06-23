@@ -15,7 +15,7 @@
     import { toast } from '@zerodevx/svelte-toast'
 
 	import io from "socket.io-client"
-	import { onMount } from "svelte";
+	import { onMount } from "svelte"
 	
 	onMount(async () => {
 		const res = await fetch("/auth/getuser")

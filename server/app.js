@@ -2,8 +2,8 @@ import "dotenv/config"
 import express from "express"
 const app = express()
 
-import cors from "cors"
-app.use(cors())
+// import cors from "cors"
+// app.use(cors())
 
 app.use(express.json())
 
@@ -28,7 +28,7 @@ const baseLimiter = rateLimit({
 
 const authLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
-	max: 10,
+	max: 15,
 	standardHeaders: true,
 	legacyHeaders: false
 });
@@ -65,7 +65,7 @@ const server = http.createServer(app)
 import { Server } from "socket.io"
 const io = new Server(server)
 
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next)
 io.use(wrap(sessionMiddleware))
 
 let socketIdByUser = new Map()

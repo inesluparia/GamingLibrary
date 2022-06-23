@@ -39,39 +39,43 @@ router.put("/api/:username/msgs/:id", (req, res) => {
     } else res.status(401).send({ message: "Not authorized!" })
 })
 
-// //NOT TESTED
-// router.get("/api/:userid/favs", (req, res) => {
-//     if (req.session.userId === parseInt(userId)) {
-//         db.query('SELECT * FROM favorites WHERE user_id = ?;', [req.params.userid], function (err, result) {
-//             if (!err) res.send({ data: result })
-//             else res.status(409).send({ message: "There has been an error: " + err.message })
-//         })
-//     } else res.status(404).send({ message: "Not authorized!" })
-// })
+router.get("/api/:username/favs", (req, res) => {
+    const username = req.params.username
+    if (req.session.username === username) {
+        db.query(`SELECT * FROM games as g
+        INNER JOIN favorites as f
+        ON f.username = g.username 
+        WHERE f.username = ?;`, [username], function (err, result) {
+            if (!err) res.send({ data: result })
+            else res.status(409).send({ message: "There has been an error: " + err.message })
+        })
+    } else res.status(401).send({ message: "Not authorized!" })
+})
 
-// //NOT TESTED
-// router.post("/api/:userid/favs", (req, res) => {
-//     const userId = req.params.userid
-//     if (req.session.userId === parseInt(userId)) {
-//         db.query(`INSERT INTO favorites (user_id, game_id) VALUES (${userId}, ? );`, [req.body.gameId],
-//         function (err, result) {
-//             if (!err) res.status(201).send({ favoriteId: result.insertId })
-//             else res.status(409).send({ message: "There has been an error: " + err.message })
-//         })
-//     } else res.status(404).send({ message: "Not authorized!" })
-// })
+router.post("/api/:username/favs", (req, res) => {
+    const username = req.params.username
+    if (req.session.username === username) {
+        db.query(`INSERT INTO favorites (username, game_id) VALUES (?, ?);`, [username, req.body.gameId],
+        function (err, result) {
+            if (!err) res.status(201).send({ favoriteId: result.insertId })
+            else res.status(409).send({ message: "There has been an error: " + err.message })
+        })
+    } else res.status(401).send({ message: "Not authorized!" })
+})
 
-// //NOT TESTED
-// router.delete("/api/:userid/favs/:id", async (req, res) => {
-//     const id = req.params.userid
-//     if (req.session.userId === parseInt(id)) {
-//         db.query('DELETE FROM favorites WHERE id = ?;', [req.params.id], function (err, result) {
-//             if (!err) res.status(200).send({ result })
-//             else res.status(409).send({ message: "There has been an error: " + err.message })
-//         })
-//     } else {
-//         res.status(404).send({ message: "Not authorized!" })
-//     }
-// })
+router.delete("/api/:username/favs/:gameid", async (req, res) => {
+    const username = req.params.username
+    if (req.session.username === username) {
+        db.query(`DELETE FROM favorites 
+        WHERE username = ?
+        AND game_id = ?;`, [username, req.params.gameid], function (err, result) {
+            if (!err) res.status(200).send({ result })
+            else res.status(409).send({ message: "There has been an error: " + err.message })
+        })
+    } else {
+        res.status(401).send({ message: "Not authorized!" })
+    }
+})
+
 export default router
 

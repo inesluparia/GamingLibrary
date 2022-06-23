@@ -36,10 +36,10 @@ db.query(`
 db.query(`
     CREATE TABLE IF NOT EXISTS favorites (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        user_id INT,
+        username VARCHAR(30),
         game_id INT,
-        CONSTRAINT FK_user_favorite FOREIGN KEY (user_id)
-        REFERENCES users(id),
+        CONSTRAINT FK_user_favorite FOREIGN KEY (username)
+        REFERENCES users(username),
         CONSTRAINT FK_game_favorite FOREIGN KEY (game_id)
         REFERENCES games(id) 
     );`
@@ -84,7 +84,6 @@ if (inDeleteMode) {
     ('Minecraft', 'PS4', '2011', 2, 'minecraft-ns.jpg')
     `)
 
-    // db.query(`INSERT INTO messages VALUES ()`)
 }
 
 db.end()

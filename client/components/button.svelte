@@ -8,7 +8,6 @@ button{
 }
 
 button {
-        /* background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));text-transform: uppercase; */
         background: linear-gradient(to right, rgb(91, 79, 247), rgb(255, 17, 17));text-transform: uppercase;
         color:white;
         vertical-align: bottom;

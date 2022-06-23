@@ -1,6 +1,6 @@
 <script>
     import { navigate } from "svelte-routing"
-    import { loginPost } from "../../services/AuthService";
+    import { loginPost } from "../../services/AuthService"
     import { isAuthenticated, user } from "../../stores/store"
 
     let error = ""
@@ -15,7 +15,7 @@
             user.set(fetchedUser)
             isAuthenticated.set(true)
             loginSocket()
-            //fix to navigate to last page!
+            //TODO fix to navigate to last page!
             navigate("/profile", { replace: true })
         }
     }

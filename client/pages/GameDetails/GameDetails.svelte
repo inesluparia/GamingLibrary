@@ -1,9 +1,10 @@
 <script>
-   import { afterUpdate, onMount } from "svelte"
+   import { onMount } from "svelte"
    import { navigate } from "svelte-routing"
    import { toast } from "@zerodevx/svelte-toast"
    import { isAuthenticated, user } from "../../stores/store"
    import { deleteGame, getGameById } from "../../services/GamesService"
+   import { addFavorite, removeFavorite } from "../../services/FavoritesService"
    import { toastSuccessOptions } from "../../utils/utils"
    import NewMessage from "../../components/NewMessage.svelte"
 
@@ -24,13 +25,26 @@
       }
    }
 
+   function toggleFav(){
+      if (isFav === false){
+         let ok = addFavorite($user.username, id)
+         if (ok) {
+            toast.push("Game added to your favorites list ❤️")
+            isFav = true
+         }
+      } else {
+         let ok = removeFavorite($user.username, id)
+         if (ok) {
+            toast.push("Game removed from favorites.")
+            isFav = false
+         }
+      }
+   }
+
 </script>
 
 <div class="flex-container">
    <div id="img-wrapper" class="flex-child">
-      {#if !game.owner_id === $user.userId}
-         <span id="heart">{isFav ? "🖤" : "🤍"}</span>
-      {/if}
       <div id="img-container">
          <img
             src="/images/{game.img}"
@@ -43,6 +57,9 @@
       {#if !renderNewMessage}
          <div id="txt-wrapper">
             <h2>{game.name}</h2>
+            {#if game.owner_id !== $user.userId}
+               <span id="heart" on:click={toggleFav}>{isFav ? "❤️" : "🤍"}</span>
+            {/if}
             <p>Year: {game.year}</p>
             <p>Platform: {game.platform}</p>
             <p>Owner: {game.username}</p>
@@ -119,10 +136,10 @@
    }
    #heart {
       font-size: x-large;
-      position: absolute;
+      /* position: absolute;
       top: 40px;
-      right: 40px;
-      z-index: 1;
+      right: 40px; */
+      /* z-index: 1; */
       cursor: pointer;
    }
    span {
