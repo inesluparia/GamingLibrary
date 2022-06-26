@@ -5,8 +5,9 @@ import Signup from "./Signup.svelte"
 export let loginSocket
 let toggle = true
 
-</script>
+const queryParams = new URLSearchParams(window.location.search)
 
+</script>
 <div id="container">
     <div>
         <button class:active="{toggle}" on:click={() => toggle = true } >I already have a user</button>
@@ -14,7 +15,7 @@ let toggle = true
     </div>
     <div>
         {#if toggle}
-        <Login loginSocket={loginSocket}></Login>
+        <Login loginSocket={loginSocket} url={queryParams.get('url')}></Login>
         {:else}
         <Signup></Signup>
         {/if}

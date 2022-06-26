@@ -6,6 +6,7 @@
     let error = ""
     let email = ""
     let password = ""
+    export let url = ""
 
     export let loginSocket
 
@@ -15,8 +16,7 @@
             user.set(fetchedUser)
             isAuthenticated.set(true)
             loginSocket()
-            //TODO fix to navigate to last page!
-            navigate("/profile", { replace: true })
+            url ? navigate(url, { replace: true }) : navigate("/profile", {replace:true})
         }
     }
 

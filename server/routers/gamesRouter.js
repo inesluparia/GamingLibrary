@@ -63,22 +63,6 @@ router.post("/api/:username/games", upload.single('uploaded_img'), async (req, r
     }
 })
 
-// //update endpoint not testet nor implementet yet!
-// router.put("/api/:username/games/:id", (req, res) => {
-//   const { name, platform, year, img } = req.body
-//   if (req.session.username === req.params.username) {
-//     db.query('UPDATE games SET name = ?, platform = ?, year = ?, img = ? WHERE id = ?;',
-//       [name, platform, year, img, req.params.id], function (err, result) {
-//         if (!err) {
-//           res.status(200).send({ result })
-//         }
-//         else res.status(409).send({ message: "There has been an error: " + err.message })
-//       })
-//   } else {
-//     res.status(404).send({ message: "Not authorized!" })
-//   }
-// })
-
 //delete game
 router.delete("/api/:username/games/:id", (req, res) => {
   if (req.session.username === req.params.username) {

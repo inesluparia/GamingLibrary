@@ -47,7 +47,7 @@
             }
          }
       } else {
-         navigate('/login', {replace:true})
+         navigate(`/login?url=${encodeURIComponent("/games/" + id)}`)
       }   
    }
 
@@ -81,10 +81,9 @@
                <button on:click|preventDefault={() => navigate(`/users/${game.username}`)}
                   >See {game.username}'s collection</button
                >
-               <button on:click|preventDefault={()=> $isAuthenticated ? renderNewMessage = true : navigate("/login", {
-                  replace: true
-                })}
-                  >Contact {game.username}</button
+               <button on:click|preventDefault={() => 
+               $isAuthenticated ? renderNewMessage = true : navigate(`/login?url=${encodeURIComponent("/games/" + id)}`)}
+               >Contact {game.username}</button
                >
                {/if}
          </div>

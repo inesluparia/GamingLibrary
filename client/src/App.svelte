@@ -55,7 +55,7 @@
 	<main>
 		<nav>
 			<div id="logo" class="nav-link">
-				<Link to="/"><img src="./images/logo.png" alt="logo"></Link>
+				<Link to="/"><img src="/images/logo.png" alt="logo"></Link>
 			</div>
 			<div class="nav-link">
 				<Link to="/about">ABOUT</Link>

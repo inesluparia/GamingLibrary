@@ -1,7 +1,7 @@
 <script>
 import { onMount } from "svelte"
 import { navigate } from "svelte-routing"
-import { isAuthenticated } from "../../stores/store"
+import { isAuthenticated, user } from "../../stores/store"
 import { getGamesByUser } from "../../services/GamesService"
 import Game from "../../components/Game.svelte"
 import NewMessage from "../../components/NewMessage.svelte"
@@ -20,19 +20,23 @@ let renderMessageForm = false
 {#if renderMessageForm}
     <NewMessage notifySocket={notifySocket} reciever={username} goBack={()=> renderMessageForm=false}></NewMessage>
 {:else}
-<div>
-    <h2>{username}'s Collection</h2>
-    <div class="flex-container">
-        {#each games as game}
-        <Game id={game.id} name={game.name} img={game.img} platform={game.platform}></Game>
-        {/each}
+    <div>
+        <h2>{username}'s Collection</h2>
+        <div class="flex-container">
+            {#each games as game}
+            <Game id={game.id} name={game.name} img={game.img} platform={game.platform}></Game>
+            {/each}
+        </div>
     </div>
-</div>
-<button 
-    on:click|preventDefault={()=> $isAuthenticated ? renderMessageForm = true : navigate("/login")}
-    >Contact {username}</button>
+    {#if $user.username != username}
+        <button 
+            on:click|preventDefault={()=> 
+            $isAuthenticated ? renderMessageForm = true : navigate(`/login?url=${encodeURIComponent("/users/" + username)}`)}
+            >Contact {username}
+        </button>
+    {/if}
+{/if}
 
- {/if}
 <style>
     .flex-container{
         margin: 25 0px;
