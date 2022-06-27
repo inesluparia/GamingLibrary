@@ -1,8 +1,7 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount } from "svelte"
     import Game from "../../components/Game.svelte"
     import { getAllGames } from "../../services/GamesService"
-
 
     let games = []
     $: gamesToDisplay = []
@@ -21,7 +20,6 @@
         return txt.toUpperCase().indexOf(upper) > -1
         })
     }
-
 </script>
 
 <input on:keyup={search} id="search-input" placeholder=" Search" bind:value={searchInput}>

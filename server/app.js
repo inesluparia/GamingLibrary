@@ -13,7 +13,6 @@ import helmet from "helmet"
 app.use(helmet())
 
 // rate limiter
-// OBS!!! will block all requests if hosted behind a proxy/load balancer (heroku, ngix, etc), then more config needed
 import rateLimit from 'express-rate-limit'
 
 const baseLimiter = rateLimit({
@@ -59,6 +58,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.resolve("../client/public/index.html"))
 })
 
+//WS-server
 import http from "http"
 const server = http.createServer(app)
 

@@ -10,6 +10,7 @@
 	
 	import { Route, Router, Link } from "svelte-routing"
 	import { isAuthenticated, user } from "../stores/store"
+	import { getUser } from "../services/AuthService"
 
 	import { SvelteToast } from '@zerodevx/svelte-toast'
     import { toast } from '@zerodevx/svelte-toast'
@@ -18,8 +19,7 @@
 	import { onMount } from "svelte"
 	
 	onMount(async () => {
-		const res = await fetch("/auth/getuser")
-		const {username} = await res.json()
+		const {username} = await getUser()
 		if ( $isAuthenticated && username === $user.username) {
 			socketLogin()
 		} else { 
@@ -49,6 +49,7 @@
 	export let url = ""	
 
 </script>
+
 <SvelteToast/>
 
 <Router {url}>
@@ -71,30 +72,29 @@
 				{/if}
 			</div>
 		</nav>
-		
 		<Route path="/"><Home /></Route>
 		<Route path="/about"><About /></Route>
-			<Route path="/login"><Login loginSocket={socketLogin}/></Route>
-			<Route path="/profile">
-				{#if $isAuthenticated}
-					<Profile notifySocket={socketNewMessage}/>
-				{:else}
-					<Login loginSocket={socketLogin}/>
-				{/if}	
-			</Route>
-			<Route path="/games/:id" let:params>
-				<GameDetails id={params.id} notifySocket={socketNewMessage}/>
-			</Route>
-			<Route path="/users/:username" let:params>
-				<UserDetails username={params.username} notifySocket={socketNewMessage}/>
-			</Route>
-		
-	</main>
-	
+		<Route path="/login"><Login loginSocket={socketLogin}/></Route>
+		<Route path="/games/:id" let:params>
+			<GameDetails id={params.id} notifySocket={socketNewMessage}/>
+		</Route>
+		<Route path="/users/:username" let:params>
+			<UserDetails username={params.username} notifySocket={socketNewMessage}/>
+		</Route>
+		<Route path="/profile">
+			{#if $isAuthenticated}
+				<Profile notifySocket={socketNewMessage}/>
+			{:else}
+				<Login loginSocket={socketLogin}/>
+			{/if}	
+		</Route>
+	</main>	
 </Router>
+
 {#if notifyGdpr}
 	<GdprBanner accept={() => notifyGdpr = false}></GdprBanner>/>
 {/if}	
+
 <Footer></Footer>
 
 <style>

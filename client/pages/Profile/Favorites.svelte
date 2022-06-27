@@ -8,25 +8,25 @@
     
     onMount( async () => { games = await getUserFavorites($user.username) })
     
-    </script>
+</script>
     
-    <div>
-        {#if games.length}
+<div>
+    {#if games.length}
         <h2>Your Favorites Collection</h2>
         <div class="flex-container">
             {#each games as game}
             <Game id={game.id} name={game.name} img={game.img} platform={game.platform}></Game>
             {/each}
         </div>
-        {:else}
-            <h2>Your favorites collection is empty</h2>
-        {/if}
-    </div>
+    {:else}
+        <h2>Your favorites collection is empty</h2>
+    {/if}
+</div>
     
-    <style>
-        div{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-    </style>
+<style>
+    div{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+</style>

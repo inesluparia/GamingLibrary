@@ -26,15 +26,6 @@ export const getGamesByUser = async (username) => {
    return response   
 }
 
-// export const getFavsByUser = async (username) => {
-//    const response = await fetch(`/api/${username}/favs`)
-//       .then(handleApiErrors)               
-//       .catch((error) => {
-//          handleCatchedErrors(error)
-//       })
-//    return response   
-// }
-
 export const deleteGame = async (username, gameId) => {
    const response = await fetch(`/api/${username}/games/${gameId}`, { method: "DELETE" })
       .then(handleApiErrors)               

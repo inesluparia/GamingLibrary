@@ -19,7 +19,6 @@
             url ? navigate(url, { replace: true }) : navigate("/profile", {replace:true})
         }
     }
-
 </script>
 
 <div id="flex-container">
@@ -33,9 +32,7 @@
             <label for="password">Password</label>
             <input type="password" bind:value={password} required/>
         </div>
-
         <button type="submit">Log in</button>
-
         <div class="error-message">
             <small>{error}</small>
         </div>
@@ -43,7 +40,6 @@
 </div>
 
 <style>
-
     input {
         width: 300px;
     }
@@ -61,7 +57,6 @@
         box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
         cursor: pointer;
     }
-
     .error-message{
         color: red;
     }

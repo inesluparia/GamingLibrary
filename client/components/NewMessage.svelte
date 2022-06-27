@@ -1,35 +1,36 @@
 <script>
-import { user } from "../stores/store"
-import { navigate } from "svelte-routing"
-import { toast } from "@zerodevx/svelte-toast"
-import { toastSuccessOptions } from "../utils/utils"
-import { createMessage } from "../services/MessagesService"
+    import { user } from "../stores/store"
+    import { navigate } from "svelte-routing"
+    import { toast } from "@zerodevx/svelte-toast"
+    import { toastSuccessOptions } from "../utils/utils"
+    import { createMessage } from "../services/MessagesService"
 
-export let reciever
-export let notifySocket
-export let goBack
+    export let reciever
+    export let notifySocket
+    export let goBack
+    export let updateMessages
 
-let content = `Hi ${reciever}! 
-\nDo you want to exchange games?
-\nCheck out my collection and let's get in touch!\n\n`
-let error = ""
+    let content = `Hi ${reciever}! 
+    \nDo you want to exchange games?
+    \nCheck out my collection and let's get in touch!\n\n`
+    let error = ""
 
-async function sendMessage() {
-    const ok = await createMessage($user.username, content, reciever)
-    if (ok) {
-        toast.push("Your message was sent!", toastSuccessOptions)
-        notifySocket({
-            sender: $user.username,
-            reciever: reciever,
-            content: content
-        })
-        navigate("/profile")
-    }
-}   
+    async function sendMessage() {
+        const ok = await createMessage($user.username, content, reciever)
+        if (ok) {
+            toast.push("Your message was sent!", toastSuccessOptions)
+            notifySocket({
+                sender: $user.username,
+                reciever: reciever,
+                content: content
+            })
+            updateMessages()
+            navigate("/profile")
+        }
+    }   
 </script>
 
 <div id="container">
-
     <span>To: {reciever}</span>
     <span>From: {$user.username}</span>
     <p>

@@ -1,6 +1,5 @@
 <script>
-import Library from "./GameLibrary.svelte";
-
+    import Library from "./GameLibrary.svelte"
 </script>
 
 <h1>The Gaming Library</h1>

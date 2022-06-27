@@ -1,5 +1,5 @@
 <script>
-import { navigate } from "svelte-routing"
+    import { navigate } from "svelte-routing"
     export let platform
     export let name
     export let img

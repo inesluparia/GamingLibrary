@@ -3,7 +3,7 @@ import { handleApiErrors, handleCatchedErrors } from "../utils/utils"
 export const createMessage = async (username, content, reciever) => {
     let time = new Date()
     time = time.toISOString().slice(0, 19).replace('T', ' ')
-    const response = fetch(`/api/${username}/msgs`, {
+    const response = await fetch(`/api/${username}/msgs`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const createMessage = async (username, content, reciever) => {
 }
 
 export const getUserMessages = async (username) => {
-    const response = fetch(`/api/${username}/msgs`)
+    const response = await fetch(`/api/${username}/msgs`)
     .then(handleApiErrors)
     .catch( error => {
         handleCatchedErrors(error)
@@ -31,7 +31,7 @@ export const getUserMessages = async (username) => {
 }
 
 export const updateMessage = async (username, messaegId) => {
-    const response = fetch(`/api/${username}/msgs/${messaegId}`, {
+    const response = await fetch(`/api/${username}/msgs/${messaegId}`, {
         method: "PUT"
     }).then(handleApiErrors)
     .catch( error => {

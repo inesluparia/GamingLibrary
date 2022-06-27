@@ -44,3 +44,13 @@ export const singoutGet = async () => {
     })
     return response
 }
+
+export const getUser = async () => {
+    const response = await fetch('/auth/getuser')
+    .then(handleApiErrors)
+    .catch((error) => {
+        handleCatchedErrors(error)
+    })
+    return response
+}
+

@@ -1,30 +1,30 @@
 <script>
-import { navigate } from "svelte-routing";
-import { user, isAuthenticated } from "../../stores/store"
-import { signupPost } from "../../services/AuthService"
+    import { navigate } from "svelte-routing"
+    import { user, isAuthenticated } from "../../stores/store"
+    import { signupPost } from "../../services/AuthService"
 
-let username = ""
-let email = ""
-let phone = ""
-let password = ""
-let confPassword = ""
-let error = ""
+    let username = ""
+    let email = ""
+    let phone = ""
+    let password = ""
+    let confPassword = ""
+    let error = ""
 
-async function signup() {
-    const newUser = await signupPost(username, email, phone, password)
-    if (newUser !== undefined) {
-                user.set({
-                    username: newUser.username,
-                    userId: newUser.userId,
-                })
-                isAuthenticated.set(true)
-            }
-            navigate("/profile")
-}
+    async function signup() {
+        const newUser = await signupPost(username, email, phone, password)
+        if (newUser !== undefined) {
+                    user.set({
+                        username: newUser.username,
+                        userId: newUser.userId,
+                    })
+                    isAuthenticated.set(true)
+                }
+                navigate("/profile", { replace: true })
+    }
 
-function checkPasswords() {
-    error = password !== confPassword ? "Passwords do not match" : ""
-}
+    function checkPasswords() {
+        error = password !== confPassword ? "Passwords do not match" : ""
+    }
 </script>
 
 <div>
@@ -50,7 +50,7 @@ function checkPasswords() {
         </div>
         <div>
             <label for="phone">Phone Nr</label>
-            <input id="phone" pattern="[0-9]{8}" title="8 digit phone number"
+            <input id="phone" pattern="[0-9]+" title="Must be an 8 digit phone number"
             bind:value={phone} required>
         </div>
         <div>
@@ -96,7 +96,6 @@ function checkPasswords() {
         box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
         cursor: pointer;
     }
-
     .error-message {
         color: red;
     }

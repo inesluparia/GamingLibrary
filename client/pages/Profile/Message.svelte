@@ -11,6 +11,7 @@
     export let is_read
     export let notifySocket
     export let goBack
+    export let updateMessages
     
     time = pretifyTime(time)
 
@@ -24,11 +25,10 @@
         <span id="time"> {time} </span>
         <p>{content}</p>
         <button on:click|preventDefault={()=> renderNewMessage = true}>Reply to {sender === $user.username ? reciever : sender}</button>
-        
         <button on:click|preventDefault={goBack}>Go back</button>
     </div>
 {:else}
-    <NewMessage reciever={sender === $user.username ? reciever : sender} notifySocket={notifySocket} goBack={goBack}></NewMessage>
+    <NewMessage updateMessages={updateMessages} reciever={sender === $user.username ? reciever : sender} notifySocket={notifySocket} goBack={goBack}></NewMessage>
 {/if}
 
 <style>
@@ -51,13 +51,13 @@
         resize: none;
     }
     button {
-      width: 150px;
-      height: 40px;
-      margin: 15px;
-      vertical-align: bottom;
-      border: 0;
-      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-      font-weight: 500;
+        width: 150px;
+        height: 40px;
+        margin: 15px;
+        vertical-align: bottom;
+        border: 0;
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        font-weight: 500;
    }
     button:hover {
         box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);

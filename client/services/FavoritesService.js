@@ -1,7 +1,7 @@
 import { handleApiErrors, handleCatchedErrors } from "../utils/utils"
 
 export const addFavorite = async (username, gameId) => {    
-    const response = fetch(`/api/${username}/favs`, {
+    const response = await fetch(`/api/${username}/favs`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export const addFavorite = async (username, gameId) => {
 }
 
 export const removeFavorite = async (username, gameId) => {
-    const response = fetch(`/api/${username}/favs/${gameId}`, {
+    const response = await fetch(`/api/${username}/favs/${gameId}`, {
         method: "DELETE"
     }).then(handleApiErrors)
     .catch( error => {

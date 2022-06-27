@@ -1,20 +1,19 @@
 <script>
-import { onMount } from "svelte"
-import { navigate } from "svelte-routing"
-import { isAuthenticated, user } from "../../stores/store"
-import { getGamesByUser } from "../../services/GamesService"
-import Game from "../../components/Game.svelte"
-import NewMessage from "../../components/NewMessage.svelte"
+    import { onMount } from "svelte"
+    import { navigate } from "svelte-routing"
+    import { isAuthenticated, user } from "../../stores/store"
+    import { getGamesByUser } from "../../services/GamesService"
+    import Game from "../../components/Game.svelte"
+    import NewMessage from "../../components/NewMessage.svelte"
 
-export let username
-export let notifySocket
+    export let username
+    export let notifySocket
 
-let games = []
+    let games = []
 
-onMount( async () => { games = await getGamesByUser(username) })
+    onMount( async () => { games = await getGamesByUser(username) })
 
-let renderMessageForm = false
-
+    let renderMessageForm = false
 </script>
 
 {#if renderMessageForm}
@@ -47,16 +46,16 @@ let renderMessageForm = false
     }
 
     button {
-      width: 150px;
-      height: 40px;
-      margin: 15px;
-      vertical-align: bottom;
-      border: 0;
-      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-      font-weight: 500;
+        width: 150px;
+        height: 40px;
+        margin: 15px;
+        vertical-align: bottom;
+        border: 0;
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+        font-weight: 500;
    }
    button:hover {
-      box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
-      cursor: pointer;
+        box-shadow: 0 5px 7px 0 rgb(0 0 0 / 20%), 0 5px 12px 0 rgb(0 0 0 / 15%);
+        cursor: pointer;
    }
 </style>

@@ -1,34 +1,38 @@
 <script>
-import { onMount } from "svelte"
-import ListMessage from "./ListMessage.svelte"
-import Message from "./Message.svelte"
-import { user } from "../../stores/store"
-import { getUserMessages } from "../../services/MessagesService"
+    import { onMount } from "svelte"
+    import ListMessage from "./ListMessage.svelte"
+    import Message from "./Message.svelte"
+    import { user } from "../../stores/store"
+    import { getUserMessages } from "../../services/MessagesService"
 
-export let notifySocket
+    export let notifySocket
 
-let messages = []
+    let messages = []
 
-onMount( async ()=> {
-    const response = await getUserMessages($user.username)
-    messages = response.data
-})
+    onMount( async ()=> {
+        loadMessages()
+    })
 
-let display = "messages"
-let messageToOpen = {}
+    async function loadMessages() {
+        const response = await getUserMessages($user.username)
+        messages = response.data
+    }
 
-function showMessage(id){
-    messageToOpen = messages.find( m => m.id == id)
-    display = "message"
-}
+    let display = "messages"
+    let messageToOpen = {}
 
+    function showMessage(id){
+        messageToOpen = messages.find( m => m.id == id)
+        display = "message"
+    }
 </script>
+
 <div class:hide={display !== "messages"}>
     {#if messages.length}
         <h3>Your recent activity</h3>
         <div id="wrapper">
             {#each messages as msg}
-            <ListMessage renderMessage={showMessage} {...msg}/>
+                <ListMessage renderMessage={showMessage} {...msg}/>
             {/each}
         </div>
     {:else}
@@ -36,10 +40,9 @@ function showMessage(id){
     {/if}
 </div>
 {#if display === "message"}
-    <Message {...messageToOpen} notifySocket={notifySocket} goBack={() => display = "messages"}/>
+    <Message updateMessages={loadMessages} {...messageToOpen} notifySocket={notifySocket} goBack={() => display = "messages"}/>
 {/if}
 <div class:hide={display !== "newMessage"}>
-
 </div>
 
 <style>
@@ -47,10 +50,10 @@ function showMessage(id){
 		display: none;
 	}
     #wrapper {
-    height: 400px;
-    overflow-y: scroll;
+        height: 400px;
+        overflow-y: scroll;
     }
     #wrapper::-webkit-scrollbar { 
-    display: none;
+        display: none;
     }
 </style>

@@ -1,7 +1,7 @@
 <script>
-import { updateMessage } from "../../services/MessagesService"
-import { user } from "../../stores/store"
-import { pretifyTime } from "../../utils/utils"
+    import { updateMessage } from "../../services/MessagesService"
+    import { user } from "../../stores/store"
+    import { pretifyTime } from "../../utils/utils"
 
     export let time
     export let sender
@@ -40,31 +40,31 @@ import { pretifyTime } from "../../utils/utils"
         display: flex;
         justify-content: space-between;
     }
-.container {
-    display: block;
-    background-color: #f0f0f0;
-    border: 2px solid #dedede;
-    border-radius: 5px;
-    padding-top:10px;
-    padding-left:10px;
-    margin: 10px;
-}
-p{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding:0 15px;
+    .container {
+        display: block;
+        background-color: #f0f0f0;
+        border: 2px solid #dedede;
+        border-radius: 5px;
+        padding-top:10px;
+        padding-left:10px;
+        margin: 10px;
+    }
+    p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding:0 15px;
 
-}
-.container:hover {
-   box-shadow: 0 4px 6px 0 rgb(0 0 0 / 10%), 0 5px 80px 0 rgb(0 0 0 / 5%);
-   cursor: pointer;
-}
-small {
-    margin:0 15px;
-}
-.notRead {
-    font-weight: bold;
-    background-color: rgb(239, 255, 255);
-}
+    }
+    .container:hover {
+        box-shadow: 0 4px 6px 0 rgb(0 0 0 / 10%), 0 5px 80px 0 rgb(0 0 0 / 5%);
+        cursor: pointer;
+    }
+    small {
+        margin:0 15px;
+    }
+    .notRead {
+        font-weight: bold;
+        background-color: rgb(239, 255, 255);
+    }
 </style>

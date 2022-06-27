@@ -32,7 +32,6 @@
 
    function toggleFav(){
       if ($isAuthenticated){
-      
          if (isFav === false){
             let ok = addFavorite($user.username, id)
             if (ok) {
@@ -42,7 +41,6 @@
          } else {
             let ok = removeFavorite($user.username, id)
             if (ok) {
-               toast.push("Game removed from favorites.")
                isFav = false
             }
          }
@@ -50,7 +48,6 @@
          navigate(`/login?url=${encodeURIComponent("/games/" + id)}`)
       }   
    }
-
 </script>
 
 <div class="flex-container">
@@ -62,7 +59,6 @@
          />
       </div>
    </div>
-
    <div class="flex-child">
       {#if !renderNewMessage}
          <div id="txt-wrapper">
@@ -85,10 +81,10 @@
                $isAuthenticated ? renderNewMessage = true : navigate(`/login?url=${encodeURIComponent("/games/" + id)}`)}
                >Contact {game.username}</button
                >
-               {/if}
+            {/if}
          </div>
       {:else}
-         <NewMessage reciever={game.username} notifySocket={notifySocket}></NewMessage>
+         <NewMessage reciever={game.username} notifySocket={notifySocket} goBack={()=> renderNewMessage = false}></NewMessage>
       {/if}
    </div>
 </div>
@@ -145,10 +141,6 @@
    }
    #heart {
       font-size: x-large;
-      /* position: absolute;
-      top: 40px;
-      right: 40px; */
-      /* z-index: 1; */
       cursor: pointer;
    }
    span {

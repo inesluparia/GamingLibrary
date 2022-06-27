@@ -29,9 +29,11 @@ db.query(`
         owner_id INT NOT NULL,
         owner_username VARCHAR(30) NOT NULL,
         CONSTRAINT FK_owner_id_game FOREIGN KEY (owner_id)
-        REFERENCES users(id),
+        REFERENCES users(id)
+        ON DELETE CASCADE,
         CONSTRAINT FK_owner_username_game FOREIGN KEY (owner_username)
         REFERENCES users(username)
+        ON DELETE CASCADE
     );`
 )
 
@@ -42,9 +44,11 @@ db.query(`
         username VARCHAR(30),
         game_id INT,
         CONSTRAINT FK_user_favorite FOREIGN KEY (username)
-        REFERENCES users(username),
+        REFERENCES users(username)
+        ON DELETE CASCADE,
         CONSTRAINT FK_game_favorite FOREIGN KEY (game_id)
         REFERENCES games(id) 
+        ON DELETE CASCADE
     );`
 )
 
@@ -86,7 +90,6 @@ if (inDeleteMode) {
     ('Pokemon Arceus', 'Nintendo Switch', '2011', 1, 'Ines', 'pokemon.jpg'),
     ('Minecraft', 'PS4', '2011', 2, 'Hugo', 'minecraft-ns.jpg')
     `)
-
 }
 
 db.end()
