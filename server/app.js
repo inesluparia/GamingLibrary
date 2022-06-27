@@ -68,7 +68,7 @@ const io = new Server(server)
 const wrap = middleware => (socket, next) => middleware(socket.request, {}, next)
 io.use(wrap(sessionMiddleware))
 
-let socketIdByUser = new Map()
+export let socketIdByUser = new Map()
 
 io.on("connection", (socket) => {
 	let sessionUsername
@@ -95,7 +95,7 @@ io.on("connection", (socket) => {
 		for (const [key, value] of socketIdByUser) {
 			if (value === socket.id)
 				socketIdByUser.delete(key)
-		} console.log("socket disconnected", socketIdByUser)
+		}
 	})
 });
 

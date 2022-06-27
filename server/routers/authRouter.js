@@ -1,6 +1,7 @@
 import { Router } from "express"
 const router = Router()
 import db from "../database/createMySQLConnection.js"
+import { socketIdByUser } from "../app.js"
 
 import bcrypt from "bcrypt"
 
@@ -9,6 +10,7 @@ router.get("/auth/getuser", (req, res)=> {
 })
 
 router.get("/auth/signout", (req, res) => {
+    socketIdByUser.delete(req.session.username)
     req.session.username = undefined
     req.session.userId = undefined
     res.status(200).send({data: "ok"})
