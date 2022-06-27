@@ -56,7 +56,6 @@ router.post("/api/:username/games", upload.single('uploaded_img'), async (req, r
           res.status(201).send({ gameId: result.insertId })
         }
         else res.status(409).send({ message: "There has been an error: " + err.message })
-        // else next(err) // Pass errors to Express.
       })
     } else {
       res.status(401).send({ message: "Not authorized!" })

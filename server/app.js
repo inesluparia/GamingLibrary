@@ -40,6 +40,7 @@ const sessionMiddleware = session({
     saveUninitialized: true,
 	cookie: { maxAge: 60000 * 60 * 24 * 7 } // 1 week
 })
+
 app.use(sessionMiddleware)
 
 import gamesRouter from "./routers/gamesRouter.js"
@@ -79,8 +80,8 @@ io.on("connection", (socket) => {
 			socketIdByUser.set(sessionUsername, socket.id)
 			console.log("socket login called", socketIdByUser)
 		} else new Error("unautharized")
-    });
-
+    })
+	
 	socket.on("new message", (data) => {
 		const sessionUsername = socket.request.session.username
 		if (data.sender === sessionUsername) {
@@ -90,14 +91,21 @@ io.on("connection", (socket) => {
 			}
 		} else new Error("unautharized")
 	})
-
+	
     socket.on("disconnect", () => {
 		for (const [key, value] of socketIdByUser) {
 			if (value === socket.id)
-				socketIdByUser.delete(key)
+			socketIdByUser.delete(key)
 		}
 	})
-});
+})
+
+export default function authorize(req, res, next) {
+	const username = req.params.username
+	if (req.session.username === username)
+		next()
+	else res.status(401).send({ message: "Not authorized!" })    
+}
 
 const PORT = process.env.PORT || 3000
 server.listen(PORT, () => console.log(`Server running in port ${PORT} :)`))
